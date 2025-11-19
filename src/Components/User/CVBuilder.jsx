@@ -1,4 +1,4 @@
- 
+
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate, useParams } from "react-router-dom";
@@ -25,10 +25,10 @@ export default function CVBuilder() {
     const userId = user?.user_id;
 
     const navigate = useNavigate();
-    const {  } = useParams();
+    const { } = useParams();
     const modalRef = useRef(null);
 
-     useEffect(() => {
+    useEffect(() => {
         axiosInstance
             .get("/templates")
             .then((res) => {
@@ -43,7 +43,7 @@ export default function CVBuilder() {
             .catch((err) => console.error("Erreur de récupération des templates :", err));
     }, []);
 
-     const handleModalSubmit = ({ title, jobTitle }) => {
+    const handleModalSubmit = ({ title, jobTitle }) => {
         setCvData((prev) => ({
             ...prev,
             title: title || prev.title,
@@ -51,7 +51,7 @@ export default function CVBuilder() {
         }));
     };
 
-     const toggleSection = (section) => {
+    const toggleSection = (section) => {
         setOpenSections((prev) => ({
             ...prev,
             [section]: !prev[section],
@@ -89,7 +89,7 @@ export default function CVBuilder() {
         setActiveSection(null);
     };
 
-     const normalizeCVData = (data) => {
+    const normalizeCVData = (data) => {
         const modalData = modalRef.current?.getFormData?.() || {};
         const finalTitle = modalData.title?.trim() || data.title?.trim() || "";
 
@@ -105,35 +105,35 @@ export default function CVBuilder() {
             languages: data.langues || [],
             // certifications: data.certifications || [],
             certifications: data.certifications?.map(cert => ({
-            title: cert.titre?.trim() || "",
-            organization: cert.organisation?.trim() || "",
-            date_obtained: cert.date_obtention || "",
-            url: cert.url?.trim() || ""
-        })) || [],
+                title: cert.titre?.trim() || "",
+                organization: cert.organisation?.trim() || "",
+                date_obtained: cert.date_obtention || "",
+                url: cert.url?.trim() || ""
+            })) || [],
         };
     };
 
-     //   Création du CV
+    //   Création du CV
     const handleCreateCV = async () => {
         const modalData = modalRef.current?.getFormData?.() || {};
         const titleToUse = cvData.title?.trim() || modalData.title?.trim();
 
-         if (!titleToUse) {
+        if (!titleToUse) {
             setTempTitle('');
             setShowTitlePopup(true);
             return;
         }
 
-         if (!cvData.template_id) {
+        if (!cvData.template_id) {
             alert("Veuillez sélectionner un modèle de CV avant de continuer !");
             return;
         }
 
         try {
-             const payload = normalizeCVData({ ...cvData, user_id: userId });
+            const payload = normalizeCVData({ ...cvData, user_id: userId });
             console.log(" Données normalisées envoyées :", payload);
 
-             const response = await axiosInstance.post("/cvs/", payload);
+            const response = await axiosInstance.post("/cvs/", payload);
 
             if (response.status === 200 || response.status === 201) {
                 alert("CV créé avec succès !");
@@ -152,12 +152,12 @@ export default function CVBuilder() {
 
     return (
         <div className="flex h-full bg-gray-50 relative">
-             <div className="absolute top-0 left-0 w-72 h-72 bg-cyan-50 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+            <div className="absolute top-0 left-0 w-72 h-72 bg-cyan-50 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
             <div className="absolute top-0 right-0 w-72 h-72 bg-pink-50 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
             <div className="absolute bottom-0 right-20 w-72 h-72 bg-blue-50 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
 
             <div className="flex flex-1">
-                 <div className="w-1/3 flex flex-col bg-gray-50 rounded-t-3xl mr-4 ml-2 mt-9">
+                <div className="w-1/3 flex flex-col bg-gray-50 rounded-t-3xl mr-4 ml-2 mt-9">
                     <LeftPanel
                         activeSection={activeSection}
                         setActiveSection={setActiveSection}
