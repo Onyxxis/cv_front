@@ -19,7 +19,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed, modalRef }) => {
     { icon: FiHome, label: "Dashboard", path: "/utilisateur/tableau_de_bord" },
     { icon: FiLayout, label: "Mes CV", path: "/utilisateur/mes_cvs" },
     { icon: FiMessageCircle, label: "Conseils", path: "/utilisateur/conseils" },
-    { icon: FiSettings, label: "Paramètres", path: "/utilisateur/parametres" },
+    { icon: FiSettings, label: "Paramètres", path: "/utilisateur/parametre" },
   ];
   const navigate = useNavigate();
   // const modalRef = useRef(null);

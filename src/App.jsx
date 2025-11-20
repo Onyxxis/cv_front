@@ -18,6 +18,7 @@ import UserList from "./Components/Admin/UserList";
 import UserAdd from "./Components/Admin/UserAdd";
 import Setting from "./Components/Admin/Settings";
 import TemplateList from "./Components/Admin/TemplateList";
+import Parametreuser from "./Components/User/Parametreuser";
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
             <Route path="tableau_de_bord" element={<Board />} />
             <Route path="creer_un_cv" element={<CVBuilder />} />
             <Route path="mes_cvs" element={<CV />}></Route>
+            <Route path="parametre" element={<Parametreuser />}></Route>
             <Route path="preview/:cvId" element={<Preview />} />
           </Route>
 
