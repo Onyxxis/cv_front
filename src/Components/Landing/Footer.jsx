@@ -7,7 +7,6 @@ const Footer = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Gérer l'abonnement à la newsletter
         console.log('Email submitted:', email);
         setEmail('');
         alert('Merci pour votre abonnement !');
@@ -15,38 +14,36 @@ const Footer = () => {
 
     return (
         <footer className="text-white border-none">
-            {/* Newsletter Section */}
-            {/* <div className="w-full bg-gradient-to-b from-white to-blue-900"> */}
-                <div className="w-full bg-gradient-to-b from-white to-blue-900 py-12 px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-between gap-6">
 
-                    {/* Texte à gauche */}
-                    <div className="text-center lg:text-left lg:flex-1">
-                        <h3 className="text-2xl font-bold mb-4 bg-blue-900 bg-clip-text text-transparent">
-                            Restez Informé
-                        </h3>
-                        <p className="text-gray-300 max-w-md">
-                            Recevez les dernières nouvelles et mises à jour de Kauza directement dans votre boîte mail.
-                        </p>
-                    </div>
+            <div className="w-full bg-gradient-to-b from-blue-800 to-blue-900 py-12 px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-between gap-6">
 
-                    {/* Formulaire à droite */}
-                    <form onSubmit={handleSubmit} className="flex gap-3 flex-1 max-w-md">
-                        <input
-                            type="email"
-                            placeholder="Entrez votre email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            className="flex-1 px-4 py-3 rounded-lg bg-gray-800 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                            required
-                        />
-                        <button
-                            type="submit"
-                            className="px-6 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200"
-                        >
-                            S'abonner
-                        </button>
-                    </form>
+                <div className="text-center lg:text-left lg:flex-1">
+                    <h3 className="text-2xl font-bold mb-4 bg-WHITE bg-clip-text text-transparent">
+                        Restez Informé
+                    </h3>
+                    <p className="text-gray-300 max-w-md">
+                        Recevez les dernières nouvelles et mises à jour de Kauza directement dans votre boîte mail.
+                    </p>
                 </div>
+
+                {/* Formulaire à droite */}
+                <form onSubmit={handleSubmit} className="flex gap-3 flex-1 max-w-md">
+                    <input
+                        type="email"
+                        placeholder="Entrez votre email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="flex-1 px-4 py-3 rounded-lg bg-gray-800 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                        required
+                    />
+                    <button
+                        type="submit"
+                        className="px-6 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200"
+                    >
+                        S'abonner
+                    </button>
+                </form>
+            </div>
             {/* </div> */}
 
 

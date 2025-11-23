@@ -20,7 +20,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
   const menuItems = [
     { icon: FiHome, label: "Dashboard", path: "/admin/dashboard" },
     { icon: FiUsers, label: "Utilisateurs", path: "/admin/utilisateurs" },
-     { icon: FiLayout, label: "Templates", path: "/admin/template-liste" },
+    { icon: FiLayout, label: "Templates", path: "/admin/template-liste" },
     { icon: FiMessageCircle, label: "Conseils", path: "/admin/conseils" },
     { icon: FiBarChart, label: "Statistique", path: "/admin/statistique" },
     { icon: FiSettings, label: "Paramètres", path: "/admin/parametres" },

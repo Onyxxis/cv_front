@@ -15,6 +15,7 @@ const PersonalInfoForm = ({ data = {}, onUpdate }) => {
     description: "",
     link: ""
   };
+  
 
   const [formData, setFormData] = useState({ ...defaultData, ...data });
 
@@ -27,7 +28,7 @@ const PersonalInfoForm = ({ data = {}, onUpdate }) => {
     // contrôle spécial pour la date de naissance
     if (field === 'birthdate') {
       const today = new Date().toISOString().split('T')[0];
-      if (value > today) value = today; // on ne peut pas dépasser aujourd'hui
+      if (value > today) value = today; 
     }
 
     const newData = { ...formData, [field]: value };

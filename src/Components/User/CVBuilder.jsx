@@ -356,7 +356,6 @@ export default function CVBuilder() {
             projects: data.projets || [],
             skills: data.competences || [],
             languages: data.langues || [],
-            // certifications: data.certifications || [],
             certifications: data.certifications?.map(cert => ({
                 title: cert.titre?.trim() || "",
                 organization: cert.organisation?.trim() || "",
@@ -412,12 +411,20 @@ export default function CVBuilder() {
                 ? `${extractedData.personal_info.first_name}_${extractedData.personal_info.last_name}`
                 : prev.title,
             jobTitle: extractedData.personal_info?.job_title || prev.jobTitle,
-            informations_personnelles: extractedData.personal_info || {},
+            // informations_personnelles: extractedData.personal_info || {},
+            // experiences: extractedData.experiences || [],
+            // formations: extractedData.education || [],
+            // projects: extractedData.projects || [],
+            // competences: extractedData.skills || [],
+            // langues: extractedData.languages || [],
+            // certifications: extractedData.certifications || [],
+            // Clés corrigées
+            personal_info: extractedData.personal_info || {},
             experiences: extractedData.experiences || [],
-            formations: extractedData.education || [],
-            projets: extractedData.projects || [],
-            competences: extractedData.skills || [],
-            langues: extractedData.languages || [],
+            education: extractedData.education || [],
+            projects: extractedData.projects || [],
+            skills: extractedData.skills || [],
+            languages: extractedData.languages || [],
             certifications: extractedData.certifications || [],
         }));
 

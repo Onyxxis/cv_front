@@ -9,15 +9,7 @@ const CertificationForm = ({ data = [], onUpdate }) => {
     setCertifications(data || []);
   }, [data]);
 
-  // 🧩 Conversion vers format backend
-  // const toBackendFormat = (certList) =>
-  //   certList.map((cert) => ({
-  //     title: cert.titre?.trim() || "",
-  //     organization: cert.organisation?.trim() || "",
-  //     date_obtained: cert.date_obtention || "",
-  //     url: cert.url?.trim() || "",
-  //   })
-  // );
+   
 
   // 🔁 Met à jour le state + notifie le parent
   const sync = (newCerts) => {

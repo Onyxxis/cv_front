@@ -12,6 +12,7 @@ const ExperienceForm = ({ data = [], onUpdate, onUpdateItem }) => {
     }
   }, [data]);
 
+  
   const addExperience = () => {
     const newExperience = {
       position: "",

@@ -1,10 +1,12 @@
- 
+
 
 import { useState, useEffect } from 'react';
 import { Trash2, Plus } from 'lucide-react';
 
 const ProjetForm = ({ data, onUpdate, onUpdateItem, onRemoveItem }) => {
   const [projets, setProjets] = useState(data || []);
+
+
 
   useEffect(() => {
     setProjets(data || []);
@@ -13,7 +15,6 @@ const ProjetForm = ({ data, onUpdate, onUpdateItem, onRemoveItem }) => {
   const today = new Date().toISOString().split('T')[0];
 
   const emitUpdate = (updatedProjets) => {
-    // ✅ Format exact attendu par le backend
     const filtered = updatedProjets.map(({ name, description, start_date, end_date }) => ({
       name: name || "",
       description: description || "",

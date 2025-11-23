@@ -37,6 +37,14 @@ const Board = () => {
       modalRef.current.openModal('upload', file);
     }
   };
+  const [popup, setPopup] = useState({ visible: false, message: "", type: "" });
+
+  const [confirmPopup, setConfirmPopup] = useState({
+    visible: false,
+    message: "",
+    onConfirm: null,
+    onCancel: null,
+  });
 
   const colors = {
     bg: "bg-blue-100",
@@ -111,7 +119,7 @@ const Board = () => {
       try {
         const res = await axiosInstance.get(`/cvs/user/${userId}`);
         const cvs = res.data.cvs.map(cv => ({
-          id: cv._id,
+          id: cv.id,
           name: cv.title,
           date: new Date(cv.updated_at).toLocaleDateString("fr-FR"),
           progress: cv.completion_percentage ?? 0
@@ -127,18 +135,37 @@ const Board = () => {
     fetchCVs();
   }, [userId]);
 
+  const openConfirmPopup = (message, onConfirm, onCancel) => {
+    setConfirmPopup({
+      visible: true,
+      message,
+      onConfirm,
+      onCancel,
+    });
+  };
   // Delete CV
-  const handleDelete = async (cvId) => {
-    if (!window.confirm("Voulez-vous vraiment supprimer ce CV ?")) return;
-    setLoadingDelete(prev => ({ ...prev, [cvId]: true }));
-    try {
-      await axiosInstance.delete(`/cvs/${cvId}`);
-      setExistingCVs(existingCVs.filter(cv => cv.id !== cvId));
-    } catch (err) {
-      console.error("Erreur lors de la suppression :", err);
-    } finally {
-      setLoadingDelete(prev => ({ ...prev, [cvId]: false }));
-    }
+  const handleDelete = (cvId) => {
+    openConfirmPopup(
+      "Voulez-vous vraiment supprimer ce CV ?",
+      async () => {
+        setConfirmPopup({ visible: false });
+
+        setLoadingDelete(prev => ({ ...prev, [cvId]: true }));
+        try {
+          await axiosInstance.delete(`/cvs/${cvId}`);
+          setExistingCVs(existingCVs.filter(cv => cv.id !== cvId));
+          showPopup("CV supprimé avec succès", "success");
+        } catch (err) {
+          console.error("Erreur lors de la suppression :", err);
+          showPopup("Échec lors de la suppression", "error");
+        } finally {
+          setLoadingDelete(prev => ({ ...prev, [cvId]: false }));
+        }
+      },
+      () => {
+        setConfirmPopup({ visible: false });
+      }
+    );
   };
 
   const items = [
@@ -388,6 +415,56 @@ const Board = () => {
           ))}
         </div>
       </div>
+
+      {popup.visible && (
+        <div className={`fixed top-6 left-1/2 transform -translate-x-1/2 z-50 px-8 py-4 rounded-2xl shadow-2xl border-l-4 ${popup.type === "success"
+          ? "bg-green-50 text-green-800 border-green-500"
+          : "bg-red-50 text-red-800 border-red-500"
+          } animate-slide-down max-w-md w-full`}>
+          <div className="flex items-center gap-4">
+            <div className={`w-8 h-8 rounded-full flex items-center justify-center ${popup.type === "success" ? "bg-green-500" : "bg-red-500"
+              } text-white font-bold`}>
+              {popup.type === "success" ? "✓" : "!"}
+            </div>
+            <div>
+              <span className="font-semibold text-lg block">{popup.message}</span>
+            </div>
+          </div>
+        </div>
+      )}
+
+
+
+      {confirmPopup.visible && (
+        <div className="fixed inset-0  bg-black/10 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-2xl shadow-xl w-80 text-center">
+            <h3 className="text-xl font-semibold text-gray-800 mb-4">
+              Confirmation
+            </h3>
+            <p className="text-gray-600 mb-6">{confirmPopup.message}</p>
+
+            <div className="flex justify-between gap-4">
+              <button
+                onClick={() => {
+                  confirmPopup.onCancel && confirmPopup.onCancel();
+                }}
+                className="w-full py-2 bg-gray-200 hover:bg-gray-300 rounded-xl font-medium text-gray-800"
+              >
+                Annuler
+              </button>
+
+              <button
+                onClick={() => {
+                  confirmPopup.onConfirm && confirmPopup.onConfirm();
+                }}
+                className="w-full py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl font-medium"
+              >
+                Confirmer
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

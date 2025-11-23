@@ -5,12 +5,10 @@ import { MdAdminPanelSettings, MdOutlineSecurity } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
 const Spinner = () => (
-    // <div className="flex justify-center items-center my-8">
-    <div className="flex justify-center items-center mt-2">
+     <div className="flex justify-center items-center mt-2">
         <div className="w-6 h-6 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
     </div>
-    // </div>
-);
+ );
 
 const UserList = () => {
     const [users, setUsers] = useState([]);

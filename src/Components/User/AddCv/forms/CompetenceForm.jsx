@@ -8,6 +8,7 @@ const CompetenceForm = ({ data, onUpdate }) => {
   useEffect(() => {
     setCompetences(data || []);
   }, [data]);
+  
 
   // const addCompetence = () => {
   //   if (newCompetence.trim() && !competences.includes(newCompetence.trim())) {

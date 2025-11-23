@@ -1,4 +1,4 @@
- import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Landing from "./Pages/Landing/Landing";
 import Dashboard from "./Pages/Users/Dashboard";
 import Board from "./Components/User/Board";
@@ -19,6 +19,9 @@ import UserAdd from "./Components/Admin/UserAdd";
 import Setting from "./Components/Admin/Settings";
 import TemplateList from "./Components/Admin/TemplateList";
 import Parametreuser from "./Components/User/Parametreuser";
+import Statistique from "./Components/Admin/Statistique";
+import Conseils from "./Components/Admin/Conseils";
+import Conseilsus from "./Components/User/Conseilsus";
 
 
 function App() {
@@ -36,9 +39,10 @@ function App() {
           <Route path="/utilisateur" element={<Dashboard />}>
             <Route path="tableau_de_bord" element={<Board />} />
             <Route path="creer_un_cv" element={<CVBuilder />} />
-            <Route path="mes_cvs" element={<CV />}></Route>
-            <Route path="parametre" element={<Parametreuser />}></Route>
+            <Route path="mes_cvs" element={<CV />} />
+            <Route path="parametre" element={<Parametreuser />} />
             <Route path="preview/:cvId" element={<Preview />} />
+            <Route path="conseils" element={<Conseilsus />} />
           </Route>
 
           <Route path="/admin" element={<Dashboardadmin />}>
@@ -47,6 +51,8 @@ function App() {
             <Route path="template-liste" element={<TemplateList />} />
             <Route path="utilisateurs" element={<UserList />} />
             <Route path="ajout-utilisateur" element={<UserAdd />} />
+            <Route path="conseils" element={<Conseils />} />
+            <Route path="statistique" element={<Statistique />} />
             <Route path="parametres" element={<Setting />} />
           </Route>
         </Routes>

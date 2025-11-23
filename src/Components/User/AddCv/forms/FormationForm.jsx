@@ -10,6 +10,7 @@ export const emptyEducation = {
   end_date: ""
 };
 
+
 const FormationForm = ({ data = [], onUpdate, onUpdateItem }) => {
   const [formations, setFormations] = useState(
     data.map(f => ({ ...f, id: f.id || uuidv4() }))
