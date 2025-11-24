@@ -48,7 +48,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed, modalRef }) => {
 
   return (
     <div
-      className={`bg-gradient-to-b from-blue-900 to-blue-800 text-white transition-all duration-300 ease-in-out flex flex-col fixed h-screen ${isCollapsed ? "w-24" : "w-52"
+      className={`bg-gradient-to-b  from-blue-900 to-blue-800 text-white transition-all duration-300 ease-in-out flex flex-col fixed h-screen ${isCollapsed ? "w-24" : "w-52"
         }`}
     >
 
