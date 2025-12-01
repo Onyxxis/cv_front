@@ -8,12 +8,12 @@ export default function Dashboard() {
   const modalRef = useRef();
 
   return (
-    <div className="flex h-screen bg-gradient-to-b from-blue-900 to-blue-800">
+    <div className="flex h-screen bg-gradient-to-b from-white to-white">
        <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} modalRef={modalRef} />
       <Modal ref={modalRef} />
 
        <main
-        className={`flex-1 overflow-auto border border-r-blue-900 transition-all duration-300 ${
+        className={`flex-1 overflow-auto border border-r-white transition-all duration-300 ${
           isCollapsed ? "ml-22" : "ml-52"
         }`}
       >

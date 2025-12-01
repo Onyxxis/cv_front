@@ -24,6 +24,8 @@ import Conseils from "./Components/Admin/Conseils";
 import Conseilsus from "./Components/User/Conseilsus";
 
 
+import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
+
 function App() {
 
   return (
@@ -35,26 +37,30 @@ function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
 
-
-          <Route path="/utilisateur" element={<Dashboard />}>
-            <Route path="tableau_de_bord" element={<Board />} />
-            <Route path="creer_un_cv" element={<CVBuilder />} />
-            <Route path="mes_cvs" element={<CV />} />
-            <Route path="parametre" element={<Parametreuser />} />
-            <Route path="preview/:cvId" element={<Preview />} />
-            <Route path="conseils" element={<Conseilsus />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/utilisateur" element={<Dashboard />}>
+              <Route path="tableau_de_bord" element={<Board />} />
+              <Route path="creer_un_cv" element={<CVBuilder />} />
+              <Route path="mes_cvs" element={<CV />} />
+              <Route path="parametre" element={<Parametreuser />} />
+              <Route path="preview/:cvId" element={<Preview />} />
+              <Route path="conseils" element={<Conseilsus />} />
+            </Route>
+          </Route>
+          
+          <Route element={<ProtectedRoute />}>
+            <Route path="/admin" element={<Dashboardadmin />}>
+              <Route path="dashboard" element={<Dash />} />
+              <Route path="template" element={<TemplateEditor />} />
+              <Route path="template-liste" element={<TemplateList />} />
+              <Route path="utilisateurs" element={<UserList />} />
+              <Route path="ajout-utilisateur" element={<UserAdd />} />
+              <Route path="conseils" element={<Conseils />} />
+              <Route path="statistique" element={<Statistique />} />
+              <Route path="parametres" element={<Setting />} />
+            </Route>
           </Route>
 
-          <Route path="/admin" element={<Dashboardadmin />}>
-            <Route path="dashboard" element={<Dash />} />
-            <Route path="template" element={<TemplateEditor />} />
-            <Route path="template-liste" element={<TemplateList />} />
-            <Route path="utilisateurs" element={<UserList />} />
-            <Route path="ajout-utilisateur" element={<UserAdd />} />
-            <Route path="conseils" element={<Conseils />} />
-            <Route path="statistique" element={<Statistique />} />
-            <Route path="parametres" element={<Setting />} />
-          </Route>
         </Routes>
         {/* </DndProvider> */}
       </AuthProvider>

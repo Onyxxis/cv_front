@@ -86,11 +86,11 @@ const CVForm = ({ section, data, updateData, updateItem, removeItem }) => {
 
       {renderForm()}
 
-      <div className="mt-4 mb-6 pt-6 ">
+      {/* <div className="mt-4 mb-6 pt-6 ">
         <button className="bg-blue-500 text-white px-8 py-3 rounded-xl shadow-md hover:bg-blue-600 hover:shadow-lg transition-all duration-300 font-medium">
           Enregistrer et continuer
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };

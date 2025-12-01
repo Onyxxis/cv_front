@@ -181,7 +181,7 @@ export default function TemplateList() {
                                     </div>
                                 </div>
 
-                                <div className="p-4">
+                                {/* <div className="p-4">
                                     <h3 className="font-semibold text-gray-900 mb-2 line-clamp-1">{tpl.name}</h3>
                                     <div className="flex items-center justify-between text-sm text-gray-600">
                                         <span>ID: {tpl.id}</span>
@@ -194,7 +194,7 @@ export default function TemplateList() {
                                             Voir fichier
                                         </a>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                         ))}
                     </div>

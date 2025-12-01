@@ -60,8 +60,13 @@ const RightPanel = ({
               Commencez à créer votre CV
             </h3>
             <p className="text-gray-500">
-              Veuillez sélectionner un des champs pour commencer à remplir.
+              Veuillez sélectionner un des sections pour commencer à remplir.
             </p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed p-6">
+              Pour une meilleure expérience de navigation, nous vous recommandons de réduire la barre latérale.
+              Cela vous permettra d’avoir une vue plus large et plus confortable de l’ensemble des éléments présents sur la page.
+            </p>
+
           </div>
 
         </motion.div>

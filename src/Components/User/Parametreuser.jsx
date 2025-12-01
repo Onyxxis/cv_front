@@ -773,7 +773,7 @@ export default function Parametreuser() {
 
         {/* Popup Notification */}
         {popup.visible && (
-          <div className={`fixed top-4 right-4 z-50 max-w-sm w-full animate-slide-in-right ${popup.type === "success" ? "bg-green-50 border-green-200" : popup.type === "error" ? "bg-red-50 border-red-200" : "bg-blue-50 border-blue-200"} border rounded-xl shadow-lg p-4`}>
+          <div className={`fixed top-4 left-1/2 z-50 max-w-sm w-full animate-slide-in-right ${popup.type === "success" ? "bg-green-50 border-green-200" : popup.type === "error" ? "bg-red-50 border-red-200" : "bg-blue-50 border-blue-200"} border rounded-xl shadow-lg p-4`}>
             <div className="flex items-start gap-3">
               <div className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center ${popup.type === "success" ? "bg-green-500" : popup.type === "error" ? "bg-red-500" : "bg-blue-500"} text-white text-sm font-bold`}>
                 {popup.type === "success" ? "✓" : "!"}

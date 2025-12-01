@@ -112,18 +112,49 @@ const Board = () => {
   }, []);
 
   // Fetch CVs
+  // useEffect(() => {
+  //   const fetchCVs = async () => {
+  //     if (!userId) return;
+  //     setLoadingCVs(true);
+  //     try {
+  //       const res = await axiosInstance.get(`/cvs/user/${userId}`);
+  //       const cvs = res.data.cvs.map(cv => ({
+  //         id: cv.id,
+  //         name: cv.title,
+  //         date: new Date(cv.updated_at).toLocaleDateString("fr-FR"),
+  //         progress: cv.completion_percentage ?? 0
+  //       }));
+  //       setExistingCVs(cvs);
+  //     } catch (err) {
+  //       console.error("Erreur lors de la récupération des CV :", err);
+  //       setExistingCVs([]);
+  //     } finally {
+  //       setLoadingCVs(false);
+  //     }
+  //   };
+  //   fetchCVs();
+  // }, [userId]);
+  // Fetch CVs
   useEffect(() => {
     const fetchCVs = async () => {
       if (!userId) return;
       setLoadingCVs(true);
       try {
         const res = await axiosInstance.get(`/cvs/user/${userId}`);
-        const cvs = res.data.cvs.map(cv => ({
+
+        const sorted = res.data.cvs.sort(
+          (a, b) => new Date(b.updated_at) - new Date(a.updated_at)
+        );
+
+        const lastFive = sorted.slice(0, 5);
+
+        const cvs = lastFive.map(cv => ({
           id: cv.id,
           name: cv.title,
           date: new Date(cv.updated_at).toLocaleDateString("fr-FR"),
           progress: cv.completion_percentage ?? 0
         }));
+
         setExistingCVs(cvs);
       } catch (err) {
         console.error("Erreur lors de la récupération des CV :", err);
@@ -134,6 +165,7 @@ const Board = () => {
     };
     fetchCVs();
   }, [userId]);
+
 
   const openConfirmPopup = (message, onConfirm, onCancel) => {
     setConfirmPopup({

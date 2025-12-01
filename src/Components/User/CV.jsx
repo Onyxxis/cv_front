@@ -253,12 +253,12 @@ const CV = () => {
                   </span>
                 </div>
                 <div className="absolute top-3 right-3 flex flex-col space-y-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0">
-                  <button
+                  {/* <button
                     onClick={() => navigate(`/utilisateur/cv/${cv.id}/edit`)}
                     className="p-2 bg-white rounded-xl shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-200 border border-gray-100"
                   >
                     <FiEdit className="w-4 h-4 text-blue-600" />
-                  </button>
+                  </button> */}
                   <button
                     onClick={() => handleDelete(cv.id)}
                     className="p-2 bg-white rounded-xl shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-200 border border-gray-100"
@@ -266,7 +266,7 @@ const CV = () => {
                     <FiTrash2 className="w-4 h-4 text-red-600" />
                   </button>
                   <button
-                    onClick={() => navigate(`/utilisateur/cv/${cv.id}/download`)}
+                    onClick={() => navigate(`/utilisateur/preview/${cv.id}`)}
                     className="p-2 bg-white rounded-xl shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-200 border border-gray-100"
                   >
                     <FiDownload className="w-4 h-4 text-green-600" />

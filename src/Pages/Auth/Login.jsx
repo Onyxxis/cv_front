@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FiMail, FiLock, FiEye, FiEyeOff, FiUser, FiArrowRight } from 'react-icons/fi';
 import logo from "../../assets/logo-min.png";
-import axiosInstance from "../../api/axiosInstance";  
+import axiosInstance from "../../api/axiosInstance";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -24,7 +24,7 @@ const Login = () => {
     const [popup, setPopup] = useState({ visible: false, message: "" });
 
     const handleInputChange = (field, value) => {
-        if (loading) return;  
+        if (loading) return;
         setFormData({ ...formData, [field]: value });
 
         if (field === "password") setErrors({ ...errors, password: "" });
@@ -100,8 +100,8 @@ const Login = () => {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 via-purple-900 to-pink-700 relative overflow-hidden">
- 
-            {popup.visible && (
+
+            {/* {popup.visible && (
                 <div className="fixed top-5 left-1/2 transform -translate-x-1/2 z-50 bg-white shadow-lg rounded-xl p-4 max-w-md w-full flex flex-col items-center">
                     <p className="text-black text-center mb-3">{popup.message}</p>
                     <button
@@ -111,7 +111,26 @@ const Login = () => {
                         OK
                     </button>
                 </div>
+            )} */}
+            {popup.visible && (
+                <div className="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 px-8 py-4 rounded-2xl shadow-2xl border-l-4 bg-white text-black border-blue-500 animate-slide-down max-w-md w-full">
+                    <div className="flex items-center gap-4">
+                        <div className="w-8 h-8 rounded-full flex items-center justify-center bg-blue-500 text-white font-bold">
+                            i
+                        </div>
+                        <div className="flex-1">
+                            <span className="font-semibold text-lg block text-center">{popup.message}</span>
+                        </div>
+                        <button
+                            className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-lg transition-colors"
+                            onClick={() => setPopup({ visible: false, message: "" })}
+                        >
+                            OK
+                        </button>
+                    </div>
+                </div>
             )}
+
 
             <div className="absolute inset-0 overflow-hidden">
                 <div className="absolute -top-40 -right-32 w-80 h-80 bg-pink-500/20 rounded-full blur-3xl animate-pulse"></div>

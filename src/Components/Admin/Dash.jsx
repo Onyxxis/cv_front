@@ -363,8 +363,8 @@ const Dash = () => {
               {[
                 { icon: <FiPlus />, label: "Créer Nouvel utilisateur", link: "/admin/utilisateurs" },
                 { icon: <FiEdit />, label: "Créer Template", link: "/admin/template-liste" },
-                { icon: <FiMessageSquare />, label: "Créer Conseil", link: "/admin/conseils/creer" },
-                { icon: <FiTrendingUp />, label: "Voir Analytics", link: "/admin/analytics" }
+                { icon: <FiMessageSquare />, label: "Créer Conseil", link: "/admin/conseils" },
+                { icon: <FiTrendingUp />, label: "Voir Analytics", link: "/admin/statistique" }
               ].map((action, i) => (
                 <button
                   key={i}

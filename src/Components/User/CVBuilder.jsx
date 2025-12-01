@@ -1,4 +1,4 @@
- 
+
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate, useParams } from "react-router-dom";
@@ -10,6 +10,8 @@ import axiosInstance from "../../api/axiosInstance";
 import { AuthContext } from "../../context/AuthContext";
 import { Modal } from "./AddCv/Modal";
 import ATS from "./AddCv/ATS";
+import Popup from "./Popup";
+import Sidebar from "./Sidebar";
 
 export default function CVBuilder() {
     const [cvData, setCvData] = useState(initialData);
@@ -23,7 +25,8 @@ export default function CVBuilder() {
     const [atsAnalysis, setAtsAnalysis] = useState(null);
     const [atsScore, setAtsScore] = useState(0);
     const [atsLoading, setAtsLoading] = useState(false);
-        const [currentCV, setCurrentCV] = useState(null); // <-- CV créé
+    const [currentCV, setCurrentCV] = useState(null);
+    const [popupMessage, setPopupMessage] = useState("");
 
 
 
@@ -132,6 +135,7 @@ export default function CVBuilder() {
                 setAtsAnalysis(analysis);
                 setAtsScore(Number.isFinite(finalScore) ? finalScore : 0);
                 console.log("Analyse ATS reçue :", analysis);
+
             } else {
                 console.warn("ATS analyze did not return success:", response?.data);
             }
@@ -155,7 +159,8 @@ export default function CVBuilder() {
         }
 
         if (!cvData.template_id) {
-            alert("Veuillez sélectionner un modèle de CV avant de continuer !");
+            showPopup("Veuillez sélectionner un modèle de CV avant de continuer !");
+
             return;
         }
 
@@ -166,7 +171,9 @@ export default function CVBuilder() {
             const response = await axiosInstance.post("/cvs/", payload);
 
             if (response.status === 200 || response.status === 201) {
-                alert("CV créé avec succès !");
+                // alert("CV créé avec succès !");
+                showPopup("CV créé avec succès !");
+
 
                 console.log("CV sauvegardé :", response.data);
                 const createdCV = response.data.cv;
@@ -176,24 +183,28 @@ export default function CVBuilder() {
                 // navigate(`/utilisateur/preview/${response.data.cv.id}`);
             } else {
                 console.error("Erreur lors de la création du CV :", response.data);
-                alert("Erreur lors de la création du CV !");
+                showPopup("Erreur lors de la création du CV !");
+
             }
         } catch (error) {
             console.error(" Erreur réseau :", error);
-            alert("Erreur lors de la création du CV !");
+            // alert("Erreur lors de la création du CV !");
+            showPopup("Erreur lors de la création du CV !");
+
         }
     };
 
 
-    // Fonction pour naviguer vers la page de preview d'un CV existant
     const previewCV = () => {
         if (!currentCV || !currentCV.id) {
-            console.error("CV invalide pour la  :", currentCV,error);
+            console.error("CV invalide pour la  :", currentCV, error);
             return;
         }
         console.log("Navigation vers la prévisualisation du CV ID :", currentCV.id);
         navigate(`/utilisateur/preview/${currentCV.id}`);
     };
+
+
 
     // ⚡ Mise à jour du CVBuilder avec les données extraites d'un CV importé
     const handleImportedData = (extractedData) => {
@@ -227,9 +238,18 @@ export default function CVBuilder() {
     };
 
 
+    const showPopup = (msg) => {
+        setPopupMessage(msg);
+    };
+
 
     return (
         <div className="flex h-full bg-gray-50 relative">
+            <Popup
+                message={popupMessage}
+                onClose={() => setPopupMessage("")}
+            />
+
             <div className="absolute top-0 left-0 w-72 h-72 bg-cyan-50 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
             <div className="absolute top-0 right-0 w-72 h-72 bg-pink-50 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
             <div className="absolute bottom-0 right-20 w-72 h-72 bg-blue-50 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
@@ -248,7 +268,7 @@ export default function CVBuilder() {
                     />
                 </div>
                 {/* Panneau droit */}
-                <div className="w-2/3 min-h-[calc(100vh-2rem)] bg-white rounded-t-3xl rounded-b-3xl shadow-md m-1 overflow-y-auto">
+                <div className="w-2/4 min-h-[calc(100vh-2rem)] bg-white rounded-t-3xl rounded-b-3xl shadow-md m-1 overflow-y-auto">
                     <AnimatePresence mode="wait">
                         <motion.div
                             key={activeSection || (isChoosingTemplate ? "template" : "default")}
@@ -274,47 +294,67 @@ export default function CVBuilder() {
                 </div>
                 <div className="w-1/4 flex flex-col bg-gray-50   ml-2 overflow-y-auto">
                     <ATS
-                        analysis={atsAnalysis}
+                        atsAnalysis={atsAnalysis}
                         score={atsScore}
-                        loading={atsLoading}
-                        onPreview={previewCV}            // ← CV créé
-
+                        atsLoading={atsLoading}
+                        onPreview={previewCV}
                     />
 
                 </div>
             </div>
             {showTitlePopup && (
-                <div className="fixed top-5 left-1/2 transform -translate-x-1/2 bg-white border border-gray-300 shadow-lg rounded-xl p-4 z-50 w-100">
-                    <h3 className="text-gray-800 font-semibold mb-2">Veuillez saisir un titre pour votre CV</h3>
-                    <input
-                        type="text"
-                        value={tempTitle}
-                        onChange={(e) => setTempTitle(e.target.value)}
-                        placeholder="Ex: CV Développeur Fullstack"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                    <div className="flex justify-end space-x-2">
-                        <button
-                            onClick={() => setShowTitlePopup(false)}
-                            className="px-3 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition"
-                        >
-                            Annuler
-                        </button>
-                        <button
-                            disabled={!tempTitle.trim()}
-                            onClick={() => {
-                                if (!tempTitle.trim()) return;
-                                setCvData((prev) => ({ ...prev, title: tempTitle.trim() }));
-                                setShowTitlePopup(false);
-                                handleCreateCV();
-                            }}
-                            className="px-3 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition"
-                        >
-                            OK
-                        </button>
+                <div className="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 px-6 py-5 border-l-blue-600 border-l-4 rounded-2xl shadow-xl border border-gray-200 bg-white animate-slide-down max-w-sm w-full">
+                    <div className="flex items-start gap-4">
+
+                        <div className="w-10 h-10 rounded-full flex items-center justify-center bg-blue-100 text-blue-600 font-semibold text-sm flex-shrink-0 mt-0.5">
+                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                            </svg>
+                        </div>
+
+                        <div className="flex-1">
+                            <h3 className="text-gray-900 font-semibold text-base mb-3 leading-tight">
+                                Titre de votre CV
+                            </h3>
+
+                            <input
+                                type="text"
+                                value={tempTitle}
+                                onChange={(e) => setTempTitle(e.target.value)}
+                                placeholder="Ex: Développeur Fullstack"
+                                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg mb-4 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                                autoFocus
+                            />
+
+                            <div className="flex justify-end space-x-2">
+                                <button
+                                    onClick={() => setShowTitlePopup(false)}
+                                    className="px-3 py-1.5 text-sm rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50 transition-colors"
+                                >
+                                    Annuler
+                                </button>
+
+                                <button
+                                    disabled={!tempTitle.trim()}
+                                    onClick={() => {
+                                        if (!tempTitle.trim()) return;
+                                        setCvData((prev) => ({ ...prev, title: tempTitle.trim() }));
+                                        setShowTitlePopup(false);
+                                        // handleCreateCV();
+                                    }}
+                                    className="px-3 py-1.5 text-sm rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                                >
+                                    ok
+                                </button>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
+
             )}
+
+
 
 
             {/* Modal */}

@@ -138,12 +138,13 @@ const ProjetForm = ({ data, onUpdate, onUpdateItem, onRemoveItem }) => {
                 </label>
                 <input
                   type="date"
-                  value={projet.end_date}
+                  value={projet.end_date || ""} 
                   onChange={(e) => updateProjet(index, 'end_date', e.target.value)}
                   className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
-                  min={projet.start_date || ""}
+                  min={projet.start_date ? projet.start_date : ""} 
                 />
               </div>
+
             </div>
           </div>
         </div>
