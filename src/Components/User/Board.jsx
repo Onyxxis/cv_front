@@ -11,10 +11,17 @@ import {
 import { Modal } from "./AddCv/Modal";
 import { ClipLoader } from "react-spinners";
 
+const Spinner = () => (
+  <div className="flex justify-center items-center">
+    <div className="w-6 h-6 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+  </div>
+);
+
+
 const Board = () => {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
-
+  
   const [lastCvTitle, setLastCvTitle] = useState(null);
   const [totalCVs, setTotalCVs] = useState(null);
   const [stats, setStats] = useState({ completed_cvs: null, in_progress_cvs: null });
@@ -27,6 +34,8 @@ const Board = () => {
 
   const modalRef = useRef(null);
   const fileInputRef = useRef(null);
+  
+
 
   const handleImportCV = () => {
     if (fileInputRef.current) fileInputRef.current.click();
@@ -220,6 +229,7 @@ const Board = () => {
       gradient: "from-emerald-400 to-green-500",
     },
   ];
+
 
   return (
     <div className="min-h-screen bg-white p-4 border-blue-900">

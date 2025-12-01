@@ -1,30 +1,33 @@
 import React from "react";
 import hero from "../../assets/hero.png";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-[120vh] mt-4 bg-white flex flex-col items-center justify-center px-2 sm:px-6 lg:px-8 relative overflow-hidden">
 
-       <div className="absolute top-0 left-0 w-72 h-72 bg-blue-50 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+      <div className="absolute top-0 left-0 w-72 h-72 bg-blue-50 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
       <div className="absolute top-0 right-0 w-72 h-72 bg-cyan-50 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
       <div className="absolute bottom-0 left-20 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
 
-       <div className="max-w-3xl mx-auto text-center relative z-10 pt-20">
+      <div className="max-w-3xl mx-auto text-center relative z-10 pt-20">
 
-         <div className="mb-6">
+        <div className="mb-6">
           <span className="bg-gradient-to-r from-blue-400 to-blue-800 text-white text-xs font-medium px-4 py-2 rounded-full shadow-md">
             Adoptez notre outil de création de CV ATS-Friendly
           </span>
         </div>
 
-         <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight text-gray-900">
+        <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight text-gray-900">
           Créez des CV ATS-Friendly simplement avec
           <span className="bg-gradient-to-r from-blue-50 to-pink-50 text-black font-medium px-2  rounded-full">
             KAUZA'CV
           </span>
         </h1>
 
-         <p className="text-base md:text-lg text-gray-700 leading-relaxed max-w-2xl mx-auto mb-10">
+        <p className="text-base md:text-lg text-gray-700 leading-relaxed max-w-2xl mx-auto mb-10">
           KAUZA-CV génère des CV optimisés pour les recruteurs (ATS) et propose
           des conseils IA pour rendre vos candidatures visibles et percutantes.
           Commencez dès maintenant et boostez vos chances de succès professionnel.
@@ -32,7 +35,10 @@ const Hero = () => {
 
         {/* Bouton CTA avec nouvelle icône */}
         <div className="flex justify-center">
-          <button className="bg-gradient-to-r from-blue-600 to-blue-800 text-white font-semibold text-base px-10 py-5 rounded-lg hover:from-blue-700 hover:to-blue-900 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+          <button
+            onClick={() => navigate("/login")}
+
+            className="bg-gradient-to-r from-blue-600 to-blue-800 text-white font-semibold text-base px-10 py-5 rounded-lg hover:from-blue-700 hover:to-blue-900 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
             <span className="flex items-center justify-center gap-3">
               <svg
                 className="w-6 h-6"

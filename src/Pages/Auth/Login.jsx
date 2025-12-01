@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState,useContext  } from 'react';
 import { FiMail, FiLock, FiEye, FiEyeOff, FiUser, FiArrowRight } from 'react-icons/fi';
 import logo from "../../assets/logo-min.png";
 import axiosInstance from "../../api/axiosInstance";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from '../../context/AuthContext';
+
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -16,6 +18,9 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [isLogin, setIsLogin] = useState(true);
+    const { saveToken } = useContext(AuthContext);
+
+    // const { access_token } = response.data;
     const [errors, setErrors] = useState({
         password: "",
         confirmPassword: "",
@@ -68,8 +73,10 @@ const Login = () => {
                 const userRole = tokenPayload.role;
 
                 localStorage.setItem("access_token", access_token);
+                saveToken(access_token);
 
                 if (userRole === "admin") {
+                    
                     navigate("/admin/dashboard");
                 } else {
                     navigate("/utilisateur/tableau_de_bord");

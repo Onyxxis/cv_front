@@ -41,6 +41,22 @@ const Dash = () => {
   const [loading, setLoading] = useState(true);
   const [totalTemplates, setTotalTemplates] = useState(null);
 
+  const Spinner = () => (
+    <div className="flex justify-center items-center">
+      <div className="w-6 h-6 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+    </div>
+  );
+
+  if (!user) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+        <Spinner />
+        <span className="mt-2 text-gray-700 font-medium">Chargement...</span>
+      </div>
+    );
+  }
+
+
 
   const COLORS = ["#1E3A8A", "#3B82F6", "#60A5FA"];
 
@@ -176,11 +192,7 @@ const Dash = () => {
     return statusMap[status] || "bg-gray-100 text-gray-700";
   };
 
-  const Spinner = () => (
-    <div className="flex justify-center items-center">
-      <div className="w-6 h-6 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-    </div>
-  );
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 p-4">
