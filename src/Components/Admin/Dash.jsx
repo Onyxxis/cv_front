@@ -29,6 +29,14 @@ import {
   Area
 } from "recharts";
 
+
+
+  const Spinner = () => (
+    <div className="flex justify-center items-center">
+      <div className="w-6 h-6 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+    </div>
+  );
+
 const Dash = () => {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
@@ -40,23 +48,11 @@ const Dash = () => {
   const [pieData, setPieData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [totalTemplates, setTotalTemplates] = useState(null);
-  const [averageScore, setAverageScore] = useState(null);
+  const [averageScore, setAverageScore] = useState("0");
 
 
-  const Spinner = () => (
-    <div className="flex justify-center items-center">
-      <div className="w-6 h-6 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-    </div>
-  );
 
-  if (!user) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
-        <Spinner />
-        <span className="mt-2 text-gray-700 font-medium">Chargement...</span>
-      </div>
-    );
-  }
+  
 
 
 
@@ -90,7 +86,9 @@ const Dash = () => {
 
         setTotalUsers(usersRes.data.total_utilisateurs || 0);
         setTotalCVs(cvsRes.data.total_cvs || 0);
-        setAverageScore(avgRes.data.average || 0);
+        // setAverageScore(avgRes.data.average_score || 0);
+        setAverageScore(Number(avgRes.data.average_score) || 0);
+
         const recentCVsData = recentRes.data || [];
 
         const recentCVsWithUsernames = await Promise.all(
@@ -113,6 +111,7 @@ const Dash = () => {
         console.error("Erreur chargement dashboard:", error);
         setTotalUsers(0);
         setTotalCVs(0);
+        setAverageScore(0);
         setRecentCVs([]);
       }
     };
@@ -125,7 +124,7 @@ const Dash = () => {
     { title: "Utilisateurs", value: totalUsers, icon: <FiUsers className="w-6 h-6" />, color: "blue" },
     { title: "CVs générés", value: totalCVs, icon: <FiFileText className="w-6 h-6" />, color: "blue" },
     { title: "Template disponible", value: totalTemplates, icon: <FiCheckCircle className="w-6 h-6" />, color: "blue" },
-    { title: "Score ATS moyen", value: `${averageScore}%`, change: "+5%", icon: <FiBarChart2 className="w-6 h-6" />, color: "blue" }
+    { title: "Score ATS moyen", value: `${averageScore}%`,  icon: <FiBarChart2 className="w-6 h-6" />, color: "blue" }
   ];
 
   useEffect(() => {
@@ -195,6 +194,15 @@ const Dash = () => {
     return statusMap[status] || "bg-gray-100 text-gray-700";
   };
 
+
+  if (!user) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+        <Spinner />
+        <span className="mt-2 text-gray-700 font-medium">Chargement...</span>
+      </div>
+    );
+  }
 
 
   return (
