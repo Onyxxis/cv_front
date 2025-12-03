@@ -148,6 +148,51 @@ export default function CVBuilder() {
 
 
     //   Création du CV
+    // const handleCreateCV = async () => {
+    //     const modalData = modalRef.current?.getFormData?.() || {};
+    //     const titleToUse = cvData.title?.trim() || modalData.title?.trim();
+
+    //     if (!titleToUse) {
+    //         setTempTitle('');
+    //         setShowTitlePopup(true);
+    //         return;
+    //     }
+
+    //     if (!cvData.template_id) {
+    //         showPopup("Veuillez sélectionner un modèle de CV avant de continuer !");
+
+    //         return;
+    //     }
+
+    //     try {
+    //         const payload = normalizeCVData({ ...cvData, user_id: userId });
+    //         console.log(" Données normalisées envoyées :", payload);
+
+    //         const response = await axiosInstance.post("/cvs/", payload);
+
+    //         if (response.status === 200 || response.status === 201) {
+    //             // alert("CV créé avec succès !");
+    //             showPopup("CV créé avec succès !");
+
+
+    //             console.log("CV sauvegardé :", response.data);
+    //             const createdCV = response.data.cv;
+    //             setCurrentCV(createdCV);
+    //             console.log("CV créé pour analyse ATS :", createdCV);
+    //             await fetchATSAnalysis(createdCV);
+    //             // navigate(`/utilisateur/preview/${response.data.cv.id}`);
+    //         } else {
+    //             console.error("Erreur lors de la création du CV :", response.data);
+    //             showPopup("Erreur lors de la création du CV !");
+
+    //         }
+    //     } catch (error) {
+    //         console.error(" Erreur réseau :", error);
+    //         // alert("Erreur lors de la création du CV !");
+    //         showPopup("Erreur lors de la création du CV !");
+
+    //     }
+    // };
     const handleCreateCV = async () => {
         const modalData = modalRef.current?.getFormData?.() || {};
         const titleToUse = cvData.title?.trim() || modalData.title?.trim();
@@ -160,40 +205,46 @@ export default function CVBuilder() {
 
         if (!cvData.template_id) {
             showPopup("Veuillez sélectionner un modèle de CV avant de continuer !");
-
             return;
         }
 
         try {
+            // 1️⃣ Récupérer les CV existants de l'utilisateur
+            const response = await axiosInstance.get(`/cvs/user/${userId}`);
+            const existingCVs = response.data.cvs || [];
+            const existingCV = existingCVs.find(cv => cv.title?.trim() === titleToUse);
+
             const payload = normalizeCVData({ ...cvData, user_id: userId });
-            console.log(" Données normalisées envoyées :", payload);
+            console.log("Données normalisées envoyées :", payload);
 
-            const response = await axiosInstance.post("/cvs/", payload);
+            if (existingCV) {
+                // Mise à jour
+                const updateResponse = await axiosInstance.patch(`/cvs/${existingCV.id}`, payload);
 
-            if (response.status === 200 || response.status === 201) {
-                // alert("CV créé avec succès !");
-                showPopup("CV créé avec succès !");
-
-
-                console.log("CV sauvegardé :", response.data);
-                const createdCV = response.data.cv;
-                setCurrentCV(createdCV);
-                console.log("CV créé pour analyse ATS :", createdCV);
-                await fetchATSAnalysis(createdCV);
-                // navigate(`/utilisateur/preview/${response.data.cv.id}`);
+                if (updateResponse.status === 200) {
+                    showPopup("CV mis à jour avec succès !");
+                    setCurrentCV(updateResponse.data.cv);
+                    await fetchATSAnalysis(updateResponse.data.cv);
+                } else {
+                    showPopup("Erreur lors de la mise à jour du CV !");
+                }
             } else {
-                console.error("Erreur lors de la création du CV :", response.data);
-                showPopup("Erreur lors de la création du CV !");
+                // Création
+                const createResponse = await axiosInstance.post("/cvs/", payload);
 
+                if (createResponse.status === 200 || createResponse.status === 201) {
+                    showPopup("CV créé avec succès !");
+                    setCurrentCV(createResponse.data.cv);
+                    await fetchATSAnalysis(createResponse.data.cv);
+                } else {
+                    showPopup("Erreur lors de la création du CV !");
+                }
             }
         } catch (error) {
-            console.error(" Erreur réseau :", error);
-            // alert("Erreur lors de la création du CV !");
-            showPopup("Erreur lors de la création du CV !");
-
+            console.error("Erreur réseau :", error);
+            showPopup("Erreur lors de l'opération !");
         }
     };
-
 
     const previewCV = () => {
         if (!currentCV || !currentCV.id) {
