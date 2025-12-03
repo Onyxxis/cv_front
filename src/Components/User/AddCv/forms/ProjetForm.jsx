@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Trash2, Plus } from 'lucide-react';
+import Reform from '../reform';
 
 const ProjetForm = ({ data, onUpdate, onUpdateItem, onRemoveItem }) => {
   const [projets, setProjets] = useState(data || []);
@@ -102,7 +103,7 @@ const ProjetForm = ({ data, onUpdate, onUpdateItem, onRemoveItem }) => {
             </div>
 
             {/* Description */}
-            <div>
+            {/* <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Description *
               </label>
@@ -113,7 +114,29 @@ const ProjetForm = ({ data, onUpdate, onUpdateItem, onRemoveItem }) => {
                 className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
                 placeholder="Décrivez le projet, ses objectifs et fonctionnalités..."
               />
+            </div> */}
+            <div className="relative">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Description *
+              </label>
+
+              <textarea
+                value={projet.description}
+                onChange={(e) => updateProjet(index, 'description', e.target.value)}
+                rows={3}
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 resize-none"
+                placeholder="Décrivez le projet, ses objectifs et fonctionnalités..."
+              />
+
+              <div className="absolute bottom-3 right-2">
+                <Reform
+                  text={projet.description}
+                  context={`Projet professionnel : ${projet.name || "Nom du projet"} - Fournis une description complète et détaillée du projet, incluant ses objectifs, ses fonctionnalités principales, les technologies et son impact.`}
+                  onReformulated={(newText) => updateProjet(index, "description", newText)}
+                />
+              </div>
             </div>
+
 
             {/* Dates */}
             <div className="grid grid-cols-2 gap-4">
@@ -138,10 +161,10 @@ const ProjetForm = ({ data, onUpdate, onUpdateItem, onRemoveItem }) => {
                 </label>
                 <input
                   type="date"
-                  value={projet.end_date || ""} 
+                  value={projet.end_date || ""}
                   onChange={(e) => updateProjet(index, 'end_date', e.target.value)}
                   className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
-                  min={projet.start_date ? projet.start_date : ""} 
+                  min={projet.start_date ? projet.start_date : ""}
                 />
               </div>
 
@@ -158,6 +181,7 @@ const ProjetForm = ({ data, onUpdate, onUpdateItem, onRemoveItem }) => {
         <Plus size={20} />
         <span className="font-medium">Ajouter un projet</span>
       </button>
+
     </div>
   );
 };

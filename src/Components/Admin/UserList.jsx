@@ -336,7 +336,7 @@ const UserList = () => {
             {/* Confirmation Popup */}
             {confirmPopup.visible && (
                 <div className="fixed inset-0 bg-black/30 backdrop-blur-md flex items-center justify-center p-4 z-50">
-                    <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6 transform animate-scale-in">
+                    <div className="bg-white rounded-2xl border-t-red-600 shadow-xl max-w-md w-full p-6 transform animate-scale-in">
                         <div className="text-center mb-2">
                             <div className="mx-auto w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
                                 <FiTrash2 className="text-red-600" size={24} />

@@ -40,6 +40,8 @@ const Dash = () => {
   const [pieData, setPieData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [totalTemplates, setTotalTemplates] = useState(null);
+  const [averageScore, setAverageScore] = useState(null);
+
 
   const Spinner = () => (
     <div className="flex justify-center items-center">
@@ -78,18 +80,19 @@ const Dash = () => {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const [usersRes, cvsRes, recentRes] = await Promise.all([
+        const [usersRes, cvsRes, recentRes, avgRes] = await Promise.all([
           axiosInstance.get("/users/count"),
           axiosInstance.get("/cvs/count"),
-          axiosInstance.get("/cvs/recent?limit=4")
+          axiosInstance.get("/cvs/recent?limit=4"),
+          axiosInstance.get("/ats/average-score")
         ]);
+
 
         setTotalUsers(usersRes.data.total_utilisateurs || 0);
         setTotalCVs(cvsRes.data.total_cvs || 0);
-
+        setAverageScore(avgRes.data.average || 0);
         const recentCVsData = recentRes.data || [];
 
-        // Pour chaque CV, récupérer le nom de l'utilisateur
         const recentCVsWithUsernames = await Promise.all(
           recentCVsData.map(async (cv) => {
             try {
@@ -122,7 +125,7 @@ const Dash = () => {
     { title: "Utilisateurs", value: totalUsers, icon: <FiUsers className="w-6 h-6" />, color: "blue" },
     { title: "CVs générés", value: totalCVs, icon: <FiFileText className="w-6 h-6" />, color: "blue" },
     { title: "Template disponible", value: totalTemplates, icon: <FiCheckCircle className="w-6 h-6" />, color: "blue" },
-    { title: "Score ATS moyen", value: "78%", change: "+5%", icon: <FiBarChart2 className="w-6 h-6" />, color: "blue" }
+    { title: "Score ATS moyen", value: `${averageScore}%`, change: "+5%", icon: <FiBarChart2 className="w-6 h-6" />, color: "blue" }
   ];
 
   useEffect(() => {

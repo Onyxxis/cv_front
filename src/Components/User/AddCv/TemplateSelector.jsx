@@ -11,39 +11,60 @@ const TemplateSelector = ({ templates = [], onSelect }) => {
         <div className="min-h-screen bg-white p-4">
             <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-6">
-                    <h1 className="text-4xl font-bold text-gray-900 mb-4">
+                    <h1 className="text-3xl font-bold text-gray-900 mb-4">
                         Choisissez votre modèle de CV
                     </h1>
-                    <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                    <p className="text-sm text-gray-600 max-w-2xl mx-auto">
                         Sélectionnez le modèle qui correspond le mieux à votre profil professionnel.
                         Cliquez sur un modèle pour le prévisualiser.
                     </p>
                 </div>
 
                 {selectedTemplate && (
-                    <div className="mt-6 mb-4 p-6 bg-blue-50 rounded-2xl border border-blue-200">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                                    Modèle sélectionné: {selectedTemplate.name}
-                                </h3>
-                                <p className="text-gray-600">
-                                    Prêt à personnaliser votre CV avec ce modèle {selectedTemplate.is_premium ? 'premium' : 'gratuit'}.
-                                </p>
-                            </div>
-                            <button
-                                className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition-colors duration-200 shadow-md hover:shadow-lg"
-                                onClick={() => {
-                                    if (selectedTemplate) {
-                                        onSelect(selectedTemplate);
-                                    }
-                                }}
-                            >
-                                Utiliser ce modèle
-                            </button>
+                    // <div className="mt-6 mb-4 p-6 bg-blue-50 rounded-2xl border border-blue-200">
+                    //     <div className="flex items-center justify-between">
+                    //         <div>
+                    //             <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                    //                 Modèle sélectionné: {selectedTemplate.name}
+                    //             </h3>
+                    //             <p className="text-gray-600">
+                    //                 Prêt à personnaliser votre CV avec ce modèle {selectedTemplate.is_premium ? 'premium' : 'gratuit'}.
+                    //             </p>
+                    //         </div>
+                    //         <button
+                    //             className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition-colors duration-200 shadow-md hover:shadow-lg"
+                    //             onClick={() => {
+                    //                 if (selectedTemplate) {
+                    //                     onSelect(selectedTemplate);
+                    //                 }
+                    //             }}
+                    //         >
+                    //             Utiliser ce modèle
+                    //         </button>
 
+                    //     </div>
+                    // </div>
+                    <div className="mt-4 mb-4 p-3 bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 w-full flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                            <div className={`p-2 rounded-lg ${selectedTemplate.is_premium ? 'bg-amber-50' : 'bg-blue-50'}`}>
+                                <svg className={`w-4 h-4 ${selectedTemplate.is_premium ? 'text-amber-600' : 'text-blue-600'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 className="text-sm font-semibold text-gray-800">{selectedTemplate.name}</h3>
+                                <p className="text-xs text-gray-500">{selectedTemplate.is_premium ? 'Premium' : 'Gratuit'}</p>
+                            </div>
                         </div>
+
+                        <button
+                            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:ring-offset-2"
+                            onClick={() => selectedTemplate && onSelect(selectedTemplate)}
+                        >
+                            Utiliser ce modele
+                        </button>
                     </div>
+
                 )}
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -57,14 +78,14 @@ const TemplateSelector = ({ templates = [], onSelect }) => {
                             onClick={() => handleTemplateSelect(template)}
                         >
                             <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
-                                 <div className="relative w-full h-48 bg-gray-100 overflow-hidden">
+                                <div className="relative w-full h-48 bg-gray-100 overflow-hidden">
                                     <img
                                         src={template.preview_image}
                                         alt={template.name}
                                         className="absolute inset-0 w-full h-full object-cover"
                                     />
 
-                                    
+
                                     {template.is_premium && (
                                         <div className="absolute top-3 right-3">
 
@@ -84,8 +105,8 @@ const TemplateSelector = ({ templates = [], onSelect }) => {
                                     </div>
 
                                     {selectedTemplate?.file_link === template.file_link && (
-                                        <div className="flex items-center mt-3 text-blue-600">
-                                            Sélectionné
+                                        <div className="flex items-center text-sm mt-3 text-blue-600">
+                                            appuyer sur utiliser ce modèle pour selectionner
                                         </div>
                                     )}
                                 </div>

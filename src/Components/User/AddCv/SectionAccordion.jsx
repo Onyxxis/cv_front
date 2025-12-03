@@ -377,7 +377,7 @@ const SectionAccordion = ({
               )}
 
               {/* Add Button */}
-              {section.hasItems && (
+              {/* {section.hasItems && (
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
@@ -390,7 +390,7 @@ const SectionAccordion = ({
                   </div>
                   <span className="text-sm font-medium">Ajouter</span>
                 </button>
-              )}
+              )} */}
             </div>
           </motion.div>
         )}

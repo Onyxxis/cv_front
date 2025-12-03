@@ -1,6 +1,7 @@
- 
+
 
 import { useState, useEffect } from 'react';
+import Reform from '../reform';
 
 const PersonalInfoForm = ({ data = {}, onUpdate }) => {
   const defaultData = {
@@ -15,7 +16,7 @@ const PersonalInfoForm = ({ data = {}, onUpdate }) => {
     description: "",
     link: ""
   };
-  
+
 
   const [formData, setFormData] = useState({ ...defaultData, ...data });
 
@@ -28,7 +29,7 @@ const PersonalInfoForm = ({ data = {}, onUpdate }) => {
     // contrôle spécial pour la date de naissance
     if (field === 'birthdate') {
       const today = new Date().toISOString().split('T')[0];
-      if (value > today) value = today; 
+      if (value > today) value = today;
     }
 
     const newData = { ...formData, [field]: value };
@@ -66,7 +67,7 @@ const PersonalInfoForm = ({ data = {}, onUpdate }) => {
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Date de naissance</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Date de naissance *</label>
           <input
             type="date"
             value={formData.birthdate}
@@ -76,7 +77,7 @@ const PersonalInfoForm = ({ data = {}, onUpdate }) => {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Genre</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Genre *</label>
           <select
             value={formData.gender}
             onChange={(e) => handleChange('gender', e.target.value)}
@@ -85,14 +86,14 @@ const PersonalInfoForm = ({ data = {}, onUpdate }) => {
             <option value="">Sélectionnez</option>
             <option value="male">Homme</option>
             <option value="female">Femme</option>
-            <option value="other">Autre</option>
+            <option value="other">Non preciser</option>
           </select>
         </div>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Nationalité</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Nationalité *</label>
           <input
             type="text"
             value={formData.nationality}
@@ -115,7 +116,7 @@ const PersonalInfoForm = ({ data = {}, onUpdate }) => {
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Téléphone</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Téléphone *</label>
           <input
             type="tel"
             value={formData.phone}
@@ -125,7 +126,7 @@ const PersonalInfoForm = ({ data = {}, onUpdate }) => {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Poste </label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Poste *</label>
           <input
             type="text"
             value={formData.job_title}
@@ -136,7 +137,7 @@ const PersonalInfoForm = ({ data = {}, onUpdate }) => {
         </div>
       </div>
 
-      <div>
+      {/* <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">Description / Profil</label>
         <textarea
           value={formData.description}
@@ -145,9 +146,32 @@ const PersonalInfoForm = ({ data = {}, onUpdate }) => {
           className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
           placeholder="Décrivez votre profil professionnel..."
         />
+      </div> */}
+      <div className="relative">
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          Description / Profil
+        </label>
+        <textarea
+          value={formData.description}
+          onChange={(e) => handleChange('description', e.target.value)}
+          rows={4}
+          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 resize-none"
+          placeholder="Décrivez votre profil professionnel..."
+        />
+        <div className="absolute bottom-3 right-3">
+          {/* <Reform /> */}
+          <Reform
+            text={formData.description}
+            // context={formData.job_title || "information personnelle"}
+            context={`Profil professionnel : ${formData.job_title || "Votre poste"} - Fournis une description complète et engageante de votre profil, incluant vos compétences clés, expériences pertinentes, qualités professionnelles et atouts pour un CV efficace.`}
+            onReformulated={(newText) =>
+              handleChange('description', newText)
+            }
+          />
+        </div>
       </div>
 
-      <div>
+      <div >
         <label className="block text-sm font-medium text-gray-700 mb-2">Lien (LinkedIn / Portfolio)</label>
         <input
           type="text"
@@ -157,6 +181,7 @@ const PersonalInfoForm = ({ data = {}, onUpdate }) => {
           placeholder="https://"
         />
       </div>
+      <br />
     </div>
   );
 };

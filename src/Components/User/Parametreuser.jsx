@@ -894,7 +894,7 @@ const InputField = ({ label, icon, name, value, editing, onChange, type = "text"
 const RoleStatus = ({ formData, editing, handleChange }) => (
   <>
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div>
+      {/* <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">Rôle du Compte</label>
         <div className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg border ${
           formData.role === "admin" ? "bg-red-50 text-red-700 border-red-200" : "bg-blue-50 text-blue-700 border-blue-200"
@@ -902,7 +902,7 @@ const RoleStatus = ({ formData, editing, handleChange }) => (
           {formData.role === "admin" ? <FiShield size={14} className="text-red-600" /> : <FiUser size={14} className="text-blue-600" />}
           <span className="font-medium capitalize">{formData.role}</span>
         </div>
-      </div>
+      </div> */}
 
       {formData.role === "user" && (
         <div>

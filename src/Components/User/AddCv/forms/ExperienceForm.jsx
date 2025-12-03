@@ -1,7 +1,7 @@
- 
+
 import { useState, useEffect } from 'react';
 import { Trash2, Plus } from 'lucide-react';
-
+import Reform from '../reform';
 const ExperienceForm = ({ data = [], onUpdate, onUpdateItem }) => {
   const [experiences, setExperiences] = useState(data);
 
@@ -12,7 +12,7 @@ const ExperienceForm = ({ data = [], onUpdate, onUpdateItem }) => {
     }
   }, [data]);
 
-  
+
   const addExperience = () => {
     const newExperience = {
       position: "",
@@ -130,7 +130,7 @@ const ExperienceForm = ({ data = [], onUpdate, onUpdateItem }) => {
               </div>
             </div>
 
-            <div>
+            {/* <div className="relative">
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Description
               </label>
@@ -141,7 +141,33 @@ const ExperienceForm = ({ data = [], onUpdate, onUpdateItem }) => {
                 className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
                 placeholder="Décrivez vos missions et responsabilités..."
               />
+              
+            </div> */}
+            <div className="relative">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Description
+              </label>
+
+              <textarea
+                value={exp.description}
+                onChange={(e) => updateExperience(index, 'description', e.target.value)}
+                rows={3}
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 resize-none"
+                placeholder="Décrivez vos missions et responsabilités..."
+              />
+
+              <div className="absolute bottom-3 right-3">
+                <Reform
+                  text={exp.description}
+                  // context={exp.position || "expérience professionnelle"}
+                  context={`Expérience professionnelle : ${exp.position || "Poste"} chez ${exp.company || "Entreprise"} - Fournis une description complète et percutante de cette expérience, incluant les missions principales, les responsabilités, les réalisations clés et l'impact sur le projet ou l'équipe.`}
+                  onReformulated={(newText) =>
+                    updateExperience(index, "description", newText)
+                  }
+                />
+              </div>
             </div>
+
           </div>
         </div>
       ))}

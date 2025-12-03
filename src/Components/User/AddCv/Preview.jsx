@@ -9,6 +9,17 @@ const Spinner = () => (
         <div className="animate-spin rounded-full h-8 w-8 border-2 border-blue-600 border-t-transparent"></div>
     </div>
 );
+const GlobalProcessingOverlay = () => (
+    <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-[9999]">
+        <div className="p-6 rounded-xl shadow-xl flex flex-col items-center gap-4">
+            <Spinner />
+            <span className="text-white font-medium">
+                Traitement en cours...
+            </span>
+        </div>
+    </div>
+);
+
 
 const DownloadMenu = ({ onDownloadPDF, onDownloadHTML, onShare, processing }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -102,7 +113,7 @@ const DownloadMenu = ({ onDownloadPDF, onDownloadHTML, onShare, processing }) =>
 };
 
 const PreviewHeader = ({ cvData, downloadMenu }) => (
-    <div className="bg-white border-b border-gray-200 px-8 py-6">
+    <div className="bg-white border-b border-gray-200 px-8 py-2">
         <div className="max-w-7xl mx-auto">
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
@@ -400,6 +411,8 @@ export default function Preview() {
                     animation: fade-in 0.15s ease-out; 
                 }
             `}</style>
+            {processing && <GlobalProcessingOverlay />}
+
         </div>
     );
 }
