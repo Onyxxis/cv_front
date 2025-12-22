@@ -1,255 +1,654 @@
+// import React, { useState } from 'react';
+// import { useNavigate } from "react-router-dom";
+
+
+// const Offres = () => {
+//     const navigate = useNavigate();
+  
+//   const [isAnnual, setIsAnnual] = useState(false);
+
+//   const plans = [
+//     {
+//       name: "Freemium",
+//       price: "Gratuit",
+//       description: "Idéal pour tester l'outil et découvrir nos fonctionnalités",
+//       buttonText: "Commencer Gratuitement",
+//       buttonVariant: "outline",
+//       popular: false,
+//       features: [
+//         { text: "Génération de CV ATS-friendly", included: true, limited: "(limité à 1-2 CV)" },
+//         { text: "Choix limité de templates", included: true },
+//         { text: "Version PDF uniquement", included: true },
+//         { text: "Analyse ATS de base", included: true, details: "(score + recommandations générales)" },
+//         { text: "Stockage limité sur le profil", included: true },
+//         { text: "Génération illimitée de CV", included: false },
+//         { text: "Tous les templates disponibles", included: false },
+//         { text: "Profil digital interactif", included: false },
+//         { text: "Analyse ATS avancée", included: false },
+//         { text: "Historique complet et suivi", included: false },
+//         { text: "Optimisation par offre d'emploi", included: false },
+//       ]
+//     },
+//     {
+//       name: "Premium",
+//       price: isAnnual ? "5000fcfa/mois" : "3500fcfa/mois",
+//       description: "Parfait pour étudiants, jeunes pros et professionnels en reconversion",
+//       buttonText: "Passer au Premium",
+//       buttonVariant: "primary",
+//       popular: true,
+//       features: [
+//         { text: "Génération de CV ATS-friendly", included: true, unlimited: true },
+//         { text: "Choix limité de templates", included: false },
+//         { text: "Version PDF uniquement", included: false },
+//         { text: "Analyse ATS de base", included: false },
+//         { text: "Stockage limité sur le profil", included: false },
+//         { text: "Génération illimitée de CV", included: true },
+//         { text: "Tous les templates disponibles", included: true },
+//         { text: "Profil digital interactif", included: true },
+//         { text: "Analyse ATS avancée", included: true, details: "(recommandations détaillées)" },
+//         { text: "Historique complet et suivi", included: true },
+//         { text: "Optimisation par offre d'emploi", included: true },
+//         { text: "Priorité sur nouvelles fonctionnalités", included: true },
+//         { text: "Relier CV au profil KAUZA", included: true },
+//       ]
+//     }
+//   ];
+
+//   return (
+//     <section className="py-20 bg-white">
+//       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+//         {/* Header */}
+//         <div className="text-center mb-16">
+//           <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-900 to-blue-600 bg-clip-text text-transparent mb-4">
+//             Choisissez votre formule
+//           </h2>
+//           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+//             Des solutions adaptées à tous les besoins, de l'essai gratuit à l'expertise professionnelle
+//           </p>
+//         </div>
+
+//         {/* Billing Toggle - Only for Premium */}
+//         <div className="flex justify-center mb-12">
+//           <div className="bg-white rounded-2xl shadow-lg p-1 border border-gray-200">
+//             <div className="flex items-center space-x-4">
+//               <span className={`px-4 py-2 rounded-xl font-medium transition-all duration-300 ${
+//                 !isAnnual 
+//                   ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-md' 
+//                   : 'text-gray-600'
+//               }`}>
+//                 Mensuel
+//               </span>
+//               <button
+//                 onClick={() => setIsAnnual(!isAnnual)}
+//                 className="relative w-14 h-8 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-200"
+//               >
+//                 <div className={`absolute top-1 w-6 h-6 bg-white rounded-full shadow-lg transform transition-all duration-300 ${
+//                   isAnnual ? 'translate-x-7' : 'translate-x-1'
+//                 }`} />
+//               </button>
+//               <span className={`px-4 py-2 rounded-xl font-medium transition-all duration-300 ${
+//                 isAnnual 
+//                   ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-md' 
+//                   : 'text-gray-600'
+//               }`}>
+//                 Annuel
+//                 <span className="ml-2 text-sm bg-green-100 text-green-700 px-2 py-1 rounded-full">
+//                   -30%
+//                 </span>
+//               </span>
+//             </div>
+//           </div>
+//         </div>
+
+//         {/* Plans Grid */}
+//         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+//           {plans.map((plan, index) => (
+//             <div
+//               key={plan.name}
+//               className={`relative bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border-2 ${
+//                 plan.popular 
+//                   ? 'border-blue-500 scale-105' 
+//                   : 'border-gray-100'
+//               }`}
+//             >
+//               {/* Popular Badge */}
+//               {plan.popular && (
+//                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+//                   <div className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-6 py-2 rounded-full text-sm font-semibold shadow-lg">
+//                     Le Plus Populaire
+//                   </div>
+//                 </div>
+//               )}
+
+//               <div className="p-8">
+//                 {/* Header */}
+//                 <div className="text-center mb-8">
+//                   <h3 className="text-2xl font-bold text-gray-800 mb-2">{plan.name}</h3>
+//                   <div className="flex items-baseline justify-center mb-4">
+//                     <span className="text-4xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
+//                       {plan.price}
+//                     </span>
+//                     {isAnnual && plan.name === "Premium" && (
+//                       <span className="text-sm text-gray-500 ml-2">/mois</span>
+//                     )}
+//                   </div>
+//                   <p className="text-gray-600">{plan.description}</p>
+//                 </div>
+
+//                 {/* CTA Button */}
+//                 <button
+//                   className={`w-full py-4 px-6 rounded-xl font-semibold text-lg transition-all duration-300 mb-8 ${
+//                     plan.buttonVariant === 'primary'
+//                       ? 'bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white shadow-lg hover:shadow-xl transform hover:-translate-y-1'
+//                       : 'border-2 border-gray-300 text-gray-700 hover:border-blue-500 hover:text-blue-600 hover:bg-blue-50'
+//                   }`}
+//                 >
+//                   {plan.buttonText}
+//                 </button>
+
+//                 {/* Features List */}
+//                 <div className="space-y-4">
+//                   {plan.features.map((feature, featureIndex) => (
+//                     <div
+//                       key={featureIndex}
+//                       className={`flex items-start space-x-3 p-3 rounded-lg transition-all duration-200 ${
+//                         feature.included 
+//                           ? plan.popular 
+//                             ? 'bg-blue-50 border border-blue-100' 
+//                             : 'bg-gray-50 border border-gray-100'
+//                           : 'opacity-50'
+//                       }`}
+//                     >
+//                       <div className={`flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center mt-0.5 ${
+//                         feature.included
+//                           ? plan.popular
+//                             ? 'bg-green-500 text-white'
+//                             : 'bg-gray-400 text-white'
+//                           : 'bg-red-100 text-red-500'
+//                       }`}>
+//                         {feature.included ? (
+//                           <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+//                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+//                           </svg>
+//                         ) : (
+//                           <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+//                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
+//                           </svg>
+//                         )}
+//                       </div>
+//                       <div className="flex-1">
+//                         <span className={`font-medium ${
+//                           feature.included ? 'text-gray-800' : 'text-gray-500'
+//                         }`}>
+//                           {feature.text}
+//                         </span>
+//                         {feature.limited && (
+//                           <span className="text-sm text-gray-500 ml-1">{feature.limited}</span>
+//                         )}
+//                         {feature.unlimited && (
+//                           <span className="text-sm text-green-600 font-medium ml-1">(Illimité)</span>
+//                         )}
+//                         {feature.details && (
+//                           <span className="text-sm text-gray-500 ml-1">{feature.details}</span>
+//                         )}
+//                       </div>
+//                     </div>
+//                   ))}
+//                 </div>
+
+//                 {/* Additional Premium Info */}
+//                 {plan.popular && isAnnual && (
+//                   <div className="mt-6 p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl border border-green-200">
+//                     <div className="flex items-center justify-center space-x-2 text-green-700">
+//                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+//                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+//                       </svg>
+//                       <span className="font-semibold">Économisez 30% avec l'abonnement annuel</span>
+//                     </div>
+//                   </div>
+//                 )}
+//               </div>
+//             </div>
+//           ))}
+//         </div>
+
+//         {/* FAQ Section */}
+//         <div className="mt-20 text-center">
+//           <div className="bg-white rounded-2xl shadow-lg p-8 max-w-2xl mx-auto border border-gray-200">
+//             <h3 className="text-2xl font-bold text-gray-800 mb-4">Questions fréquentes</h3>
+//             <div className="space-y-4 text-left">
+//               <div className="border-b border-gray-200 pb-4">
+//                 <h4 className="font-semibold text-gray-800 mb-2">Puis-je changer de formule à tout moment ?</h4>
+//                 <p className="text-gray-600">Oui, vous pouvez passer du Freemium au Premium à tout moment, et vice versa.</p>
+//               </div>
+//               <div className="border-b border-gray-200 pb-4">
+//                 <h4 className="font-semibold text-gray-800 mb-2">Y a-t-il un engagement ?</h4>
+//                 <p className="text-gray-600">Aucun engagement avec la formule Freemium. Le Premium peut être résilié à tout moment.</p>
+//               </div>
+//               <div>
+//                 <h4 className="font-semibold text-gray-800 mb-2">Quels moyens de paiement acceptez-vous ?</h4>
+//                 <p className="text-gray-600">Nous acceptons les moyens de payement local comme flooz ou mix by yass, et virements bancaires.</p>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+
+        
+//       </div>
+//       <div className="flex flex-col py-22 sm:flex-row gap-4 justify-center items-center">
+//           <button 
+//           onClick={() => navigate("/login")}
+//           className="bg-gradient-to-r from-blue-600 to-pink-800 text-white font-semibold text-base px-6 py-3 rounded-lg hover:from-blue-700 hover:to-pink-900 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl w-full sm:w-auto">
+//             <span className="flex items-center justify-center gap-2">
+//               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+//                </svg>
+//               Essayer maintenant
+//             </span>
+//           </button>
+
+           
+//         </div>
+//     </section>
+//   );
+// };
+
+// export default Offres;
+
+
+
+
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
-
 const Offres = () => {
     const navigate = useNavigate();
-  
-  const [isAnnual, setIsAnnual] = useState(false);
+    const [isAnnual, setIsAnnual] = useState(false);
 
-  const plans = [
-    {
-      name: "Freemium",
-      price: "Gratuit",
-      description: "Idéal pour tester l'outil et découvrir nos fonctionnalités",
-      buttonText: "Commencer Gratuitement",
-      buttonVariant: "outline",
-      popular: false,
-      features: [
-        { text: "Génération de CV ATS-friendly", included: true, limited: "(limité à 1-2 CV)" },
-        { text: "Choix limité de templates", included: true },
-        { text: "Version PDF uniquement", included: true },
-        { text: "Analyse ATS de base", included: true, details: "(score + recommandations générales)" },
-        { text: "Stockage limité sur le profil", included: true },
-        { text: "Génération illimitée de CV", included: false },
-        { text: "Tous les templates disponibles", included: false },
-        { text: "Profil digital interactif", included: false },
-        { text: "Analyse ATS avancée", included: false },
-        { text: "Historique complet et suivi", included: false },
-        { text: "Optimisation par offre d'emploi", included: false },
-      ]
-    },
-    {
-      name: "Premium",
-      price: isAnnual ? "5000fcfa/mois" : "3500fcfa/mois",
-      description: "Parfait pour étudiants, jeunes pros et professionnels en reconversion",
-      buttonText: "Passer au Premium",
-      buttonVariant: "primary",
-      popular: true,
-      features: [
-        { text: "Génération de CV ATS-friendly", included: true, unlimited: true },
-        { text: "Choix limité de templates", included: false },
-        { text: "Version PDF uniquement", included: false },
-        { text: "Analyse ATS de base", included: false },
-        { text: "Stockage limité sur le profil", included: false },
-        { text: "Génération illimitée de CV", included: true },
-        { text: "Tous les templates disponibles", included: true },
-        { text: "Profil digital interactif", included: true },
-        { text: "Analyse ATS avancée", included: true, details: "(recommandations détaillées)" },
-        { text: "Historique complet et suivi", included: true },
-        { text: "Optimisation par offre d'emploi", included: true },
-        { text: "Priorité sur nouvelles fonctionnalités", included: true },
-        { text: "Relier CV au profil KAUZA", included: true },
-      ]
-    }
-  ];
+    const plans = [
+        {
+            name: "Freemium",
+            price: "Gratuit",
+            period: null,
+            description: "Parfait pour découvrir les fonctionnalités de base",
+            buttonText: "Commencer gratuitement",
+            buttonVariant: "outline",
+            tag: null,
+            features: [
+                { text: "Génération de CV ATS-friendly", included: true, limit: "1-2 CV" },
+                { text: "Modèles de base", included: true },
+                { text: "Export PDF standard", included: true },
+                { text: "Analyse ATS basique", included: true },
+                { text: "Espace de stockage limité", included: true, limit: "500 Mo" },
+                { text: "Génération illimitée de CV", included: false },
+                { text: "Modèles premium", included: false },
+                { text: "Profil numérique interactif", included: false },
+                { text: "Analyse ATS avancée", included: false },
+                { text: "Historique complet", included: false },
+                { text: "Optimisation par offre", included: false },
+            ]
+        },
+        {
+            name: "Premium",
+            price: isAnnual ? "5 000" : "3 500",
+            period: "FCFA/mois",
+            description: "Solution complète pour professionnels ambitieux",
+            buttonText: "Choisir Premium",
+            buttonVariant: "primary",
+            tag: "Le plus populaire",
+            features: [
+                { text: "Génération de CV ATS-friendly", included: true, unlimited: true },
+                { text: "Modèles de base", included: true },
+                { text: "Export PDF standard", included: true },
+                { text: "Analyse ATS basique", included: true },
+                { text: "Espace de stockage limité", included: false },
+                { text: "Génération illimitée de CV", included: true },
+                { text: "Tous les modèles premium", included: true },
+                { text: "Profil numérique interactif", included: true },
+                { text: "Analyse ATS avancée", included: true, highlight: true },
+                { text: "Historique complet", included: true },
+                { text: "Optimisation par offre", included: true, highlight: true },
+                { text: "Support prioritaire", included: true },
+                { text: "Intégration KAUZA", included: true },
+            ]
+        }
+    ];
 
-  return (
-    <section className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-900 to-blue-600 bg-clip-text text-transparent mb-4">
-            Choisissez votre formule
-          </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Des solutions adaptées à tous les besoins, de l'essai gratuit à l'expertise professionnelle
-          </p>
-        </div>
+    const faqs = [
+        {
+            question: "Puis-je changer de formule à tout moment ?",
+            answer: "Oui, vous pouvez passer du Freemium au Premium à tout moment, et revenir au Freemium si nécessaire."
+        },
+        {
+            question: "Y a-t-il un engagement avec la formule Premium ?",
+            answer: "Aucun engagement. Vous pouvez résilier votre abonnement Premium à tout moment."
+        },
+        {
+            question: "Quels moyens de paiement acceptez-vous ?",
+            answer: "Nous acceptons les moyens de paiement locaux (Flooz, TMoney, mix by yass) ainsi que les virements bancaires."
+        },
+        {
+            question: "Mes données sont-elles sécurisées ?",
+            answer: "Absolument. Nous utilisons un chiffrement de bout en bout et ne partageons jamais vos données personnelles."
+        }
+    ];
 
-        {/* Billing Toggle - Only for Premium */}
-        <div className="flex justify-center mb-12">
-          <div className="bg-white rounded-2xl shadow-lg p-1 border border-gray-200">
-            <div className="flex items-center space-x-4">
-              <span className={`px-4 py-2 rounded-xl font-medium transition-all duration-300 ${
-                !isAnnual 
-                  ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-md' 
-                  : 'text-gray-600'
-              }`}>
-                Mensuel
-              </span>
-              <button
-                onClick={() => setIsAnnual(!isAnnual)}
-                className="relative w-14 h-8 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-200"
-              >
-                <div className={`absolute top-1 w-6 h-6 bg-white rounded-full shadow-lg transform transition-all duration-300 ${
-                  isAnnual ? 'translate-x-7' : 'translate-x-1'
-                }`} />
-              </button>
-              <span className={`px-4 py-2 rounded-xl font-medium transition-all duration-300 ${
-                isAnnual 
-                  ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-md' 
-                  : 'text-gray-600'
-              }`}>
-                Annuel
-                <span className="ml-2 text-sm bg-green-100 text-green-700 px-2 py-1 rounded-full">
-                  -30%
-                </span>
-              </span>
-            </div>
-          </div>
-        </div>
+    const handlePlanSelect = (planName) => {
+        if (planName === "Premium") {
+            // Redirection vers la page de paiement ou inscription
+            navigate("/register");
+        } else {
+            navigate("/login");
+        }
+    };
 
-        {/* Plans Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          {plans.map((plan, index) => (
-            <div
-              key={plan.name}
-              className={`relative bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border-2 ${
-                plan.popular 
-                  ? 'border-blue-500 scale-105' 
-                  : 'border-gray-100'
-              }`}
-            >
-              {/* Popular Badge */}
-              {plan.popular && (
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <div className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-6 py-2 rounded-full text-sm font-semibold shadow-lg">
-                    Le Plus Populaire
-                  </div>
-                </div>
-              )}
-
-              <div className="p-8">
-                {/* Header */}
-                <div className="text-center mb-8">
-                  <h3 className="text-2xl font-bold text-gray-800 mb-2">{plan.name}</h3>
-                  <div className="flex items-baseline justify-center mb-4">
-                    <span className="text-4xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
-                      {plan.price}
-                    </span>
-                    {isAnnual && plan.name === "Premium" && (
-                      <span className="text-sm text-gray-500 ml-2">/mois</span>
-                    )}
-                  </div>
-                  <p className="text-gray-600">{plan.description}</p>
-                </div>
-
-                {/* CTA Button */}
-                <button
-                  className={`w-full py-4 px-6 rounded-xl font-semibold text-lg transition-all duration-300 mb-8 ${
-                    plan.buttonVariant === 'primary'
-                      ? 'bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white shadow-lg hover:shadow-xl transform hover:-translate-y-1'
-                      : 'border-2 border-gray-300 text-gray-700 hover:border-blue-500 hover:text-blue-600 hover:bg-blue-50'
-                  }`}
-                >
-                  {plan.buttonText}
-                </button>
-
-                {/* Features List */}
-                <div className="space-y-4">
-                  {plan.features.map((feature, featureIndex) => (
-                    <div
-                      key={featureIndex}
-                      className={`flex items-start space-x-3 p-3 rounded-lg transition-all duration-200 ${
-                        feature.included 
-                          ? plan.popular 
-                            ? 'bg-blue-50 border border-blue-100' 
-                            : 'bg-gray-50 border border-gray-100'
-                          : 'opacity-50'
-                      }`}
-                    >
-                      <div className={`flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center mt-0.5 ${
-                        feature.included
-                          ? plan.popular
-                            ? 'bg-green-500 text-white'
-                            : 'bg-gray-400 text-white'
-                          : 'bg-red-100 text-red-500'
-                      }`}>
-                        {feature.included ? (
-                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                          </svg>
-                        ) : (
-                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
-                          </svg>
-                        )}
-                      </div>
-                      <div className="flex-1">
-                        <span className={`font-medium ${
-                          feature.included ? 'text-gray-800' : 'text-gray-500'
-                        }`}>
-                          {feature.text}
+    return (
+        <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                {/* En-tête */}
+                <div className="text-center mb-16">
+                    <div className="inline-block px-4 py-2 bg-blue-50 rounded-full border border-blue-100 mb-6">
+                        <span className="text-sm font-semibold text-blue-700 uppercase tracking-wider">
+                            Tarification
                         </span>
-                        {feature.limited && (
-                          <span className="text-sm text-gray-500 ml-1">{feature.limited}</span>
-                        )}
-                        {feature.unlimited && (
-                          <span className="text-sm text-green-600 font-medium ml-1">(Illimité)</span>
-                        )}
-                        {feature.details && (
-                          <span className="text-sm text-gray-500 ml-1">{feature.details}</span>
-                        )}
-                      </div>
                     </div>
-                  ))}
+                    <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                        Des solutions adaptées à vos besoins
+                    </h1>
+                    <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                        Choisissez la formule qui correspond à vos objectifs professionnels
+                    </p>
                 </div>
 
-                {/* Additional Premium Info */}
-                {plan.popular && isAnnual && (
-                  <div className="mt-6 p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl border border-green-200">
-                    <div className="flex items-center justify-center space-x-2 text-green-700">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                      <span className="font-semibold">Économisez 30% avec l'abonnement annuel</span>
+                {/* Toggle Périodicité */}
+                <div className="flex justify-center mb-16">
+                    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-2">
+                        <div className="flex items-center space-x-6">
+                            <button
+                                onClick={() => setIsAnnual(false)}
+                                className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
+                                    !isAnnual 
+                                        ? 'bg-blue-600 text-white shadow-md' 
+                                        : 'text-gray-600 hover:text-gray-900'
+                                }`}
+                            >
+                                Facturation mensuelle
+                            </button>
+                            <div className="relative">
+                                <button
+                                    onClick={() => setIsAnnual(!isAnnual)}
+                                    className="w-14 h-7 bg-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                                    aria-label="Basculer entre mensuel et annuel"
+                                >
+                                    <div className={`absolute top-1 w-5 h-5 bg-white rounded-full shadow-md transform transition-transform duration-300 ${
+                                        isAnnual ? 'translate-x-8' : 'translate-x-1'
+                                    }`} />
+                                </button>
+                            </div>
+                            <button
+                                onClick={() => setIsAnnual(true)}
+                                className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 relative ${
+                                    isAnnual 
+                                        ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-md' 
+                                        : 'text-gray-600 hover:text-gray-900'
+                                }`}
+                            >
+                                Facturation annuelle
+                                {isAnnual && (
+                                    <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                                        -30%
+                                    </span>
+                                )}
+                            </button>
+                        </div>
                     </div>
-                  </div>
-                )}
-              </div>
+                </div>
+
+                {/* Plans Grid */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto mb-20">
+                    {plans.map((plan, index) => (
+                        <div
+                            key={plan.name}
+                            className={`relative bg-white rounded-2xl border transition-all duration-300 hover:shadow-xl ${
+                                plan.tag 
+                                    ? 'border-blue-500 shadow-lg' 
+                                    : 'border-gray-200'
+                            }`}
+                        >
+                            {/* Badge Populaire */}
+                            {plan.tag && (
+                                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                                    <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white px-6 py-1.5 rounded-full text-sm font-semibold shadow-lg">
+                                        {plan.tag}
+                                    </div>
+                                </div>
+                            )}
+
+                            <div className="p-8">
+                                {/* En-tête Plan */}
+                                <div className="text-center mb-8 pb-8 border-b border-gray-100">
+                                    <h3 className="text-2xl font-bold text-gray-900 mb-4">{plan.name}</h3>
+                                    <div className="mb-4">
+                                        <div className="flex items-baseline justify-center">
+                                            <span className="text-5xl font-bold text-gray-900">
+                                                {plan.price}
+                                            </span>
+                                            {plan.period && (
+                                                <span className="text-lg text-gray-600 ml-2">{plan.period}</span>
+                                            )}
+                                        </div>
+                                        {isAnnual && plan.name === "Premium" && (
+                                            <p className="text-sm text-gray-500 mt-2">
+                                                Paiement annuel de <span className="line-through">42 000 FCFA</span> 60 000 FCFA
+                                            </p>
+                                        )}
+                                    </div>
+                                    <p className="text-gray-600">{plan.description}</p>
+                                </div>
+
+                                {/* Bouton CTA */}
+                                <button
+                                    onClick={() => handlePlanSelect(plan.name)}
+                                    className={`w-full py-3.5 px-6 rounded-xl font-semibold transition-all duration-300 mb-8 ${
+                                        plan.buttonVariant === 'primary'
+                                            ? 'bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white hover:shadow-lg'
+                                            : 'border-2 border-gray-300 text-gray-700 hover:border-blue-500 hover:text-blue-600 hover:bg-blue-50'
+                                    }`}
+                                >
+                                    {plan.buttonText}
+                                </button>
+
+                                {/* Liste des fonctionnalités */}
+                                <div className="space-y-3">
+                                    <h4 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">
+                                        Ce qui est inclus :
+                                    </h4>
+                                    {plan.features.map((feature, idx) => (
+                                        <div
+                                            key={idx}
+                                            className={`flex items-start justify-between p-3 rounded-lg ${
+                                                feature.included 
+                                                    ? feature.highlight
+                                                        ? 'bg-blue-50 border border-blue-100'
+                                                        : ''
+                                                    : 'opacity-40'
+                                            }`}
+                                        >
+                                            <div className="flex items-start space-x-3">
+                                                <div className={`flex-shrink-0 w-5 h-5 rounded flex items-center justify-center mt-0.5 ${
+                                                    feature.included 
+                                                        ? feature.highlight 
+                                                            ? 'bg-blue-600' 
+                                                            : 'bg-gray-400'
+                                                        : 'bg-gray-200'
+                                                }`}>
+                                                    {feature.included ? (
+                                                        <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                                                        </svg>
+                                                    ) : (
+                                                        <svg className="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
+                                                        </svg>
+                                                    )}
+                                                </div>
+                                                <span className={`text-sm ${
+                                                    feature.included 
+                                                        ? feature.highlight 
+                                                            ? 'text-blue-700 font-medium' 
+                                                            : 'text-gray-700'
+                                                        : 'text-gray-500'
+                                                }`}>
+                                                    {feature.text}
+                                                </span>
+                                            </div>
+                                            {(feature.limit || feature.unlimited) && (
+                                                <span className={`text-xs font-medium px-2 py-1 rounded-full ${
+                                                    feature.unlimited 
+                                                        ? 'bg-green-100 text-green-700'
+                                                        : 'bg-gray-100 text-gray-600'
+                                                }`}>
+                                                    {feature.unlimited ? 'Illimité' : feature.limit}
+                                                </span>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+
+                                {/* Économie annuelle */}
+                                {plan.tag && isAnnual && (
+                                    <div className="mt-6 p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg border border-green-200">
+                                        <div className="flex items-center justify-center space-x-2">
+                                            <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                            <span className="text-sm font-semibold text-green-700">
+                                                Économisez 18 000 FCFA avec l'abonnement annuel
+                                            </span>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                {/* Section Comparaison */}
+                <div className="mb-20">
+                    <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+                        <div className="p-8">
+                            <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">
+                                Comparaison des formules
+                            </h3>
+                            <div className="overflow-x-auto">
+                                <table className="w-full">
+                                    <thead>
+                                        <tr className="border-b border-gray-200">
+                                            <th className="text-left py-4 px-6 text-gray-700 font-semibold">Fonctionnalité</th>
+                                            <th className="text-center py-4 px-6">
+                                                <div className="font-semibold text-gray-700">Freemium</div>
+                                            </th>
+                                            <th className="text-center py-4 px-6">
+                                                <div className="font-semibold text-blue-700">Premium</div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr className="border-b border-gray-100">
+                                            <td className="py-4 px-6 text-gray-700">Génération de CV</td>
+                                            <td className="text-center py-4 px-6">
+                                                <span className="text-sm text-gray-600">1-2 CV</span>
+                                            </td>
+                                            <td className="text-center py-4 px-6">
+                                                <span className="text-sm font-medium text-green-600">Illimité</span>
+                                            </td>
+                                        </tr>
+                                        <tr className="border-b border-gray-100">
+                                            <td className="py-4 px-6 text-gray-700">Modèles disponibles</td>
+                                            <td className="text-center py-4 px-6">
+                                                <span className="text-sm text-gray-600">Basiques</span>
+                                            </td>
+                                            <td className="text-center py-4 px-6">
+                                                <span className="text-sm font-medium text-green-600">Tous</span>
+                                            </td>
+                                        </tr>
+                                        <tr className="border-b border-gray-100">
+                                            <td className="py-4 px-6 text-gray-700">Analyse ATS avancée</td>
+                                            <td className="text-center py-4 px-6">-</td>
+                                            <td className="text-center py-4 px-6">
+                                                <svg className="w-5 h-5 text-green-500 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                                                </svg>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className="py-4 px-6 text-gray-700">Optimisation par offre</td>
+                                            <td className="text-center py-4 px-6">-</td>
+                                            <td className="text-center py-4 px-6">
+                                                <svg className="w-5 h-5 text-green-500 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                                                </svg>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* FAQ */}
+                <div className="max-w-4xl mx-auto mb-16">
+                    <h3 className="text-3xl font-bold text-gray-900 mb-12 text-center">
+                        Questions fréquentes
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {faqs.map((faq, index) => (
+                            <div
+                                key={index}
+                                className="bg-white rounded-xl border border-gray-200 p-6 hover:border-blue-300 transition-colors duration-300"
+                            >
+                                <h4 className="text-lg font-semibold text-gray-900 mb-3">
+                                    {faq.question}
+                                </h4>
+                                <p className="text-gray-600 leading-relaxed">
+                                    {faq.answer}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* CTA Final */}
+                <div className="text-center">
+                    <div className="bg-gradient-to-r from-blue-50 to-gray-50 rounded-2xl border border-blue-100 p-8 max-w-2xl mx-auto">
+                        <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                            Prêt à optimiser votre CV ?
+                        </h3>
+                        <p className="text-gray-600 mb-6">
+                            Rejoignez des milliers de professionnels qui ont déjà transformé leur CV avec notre plateforme.
+                        </p>
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                            <button
+                                onClick={() => navigate("/login")}
+                                className="px-8 py-3.5 bg-white border-2 border-blue-600 text-blue-600 font-semibold rounded-lg hover:bg-blue-50 transition-colors duration-300"
+                            >
+                                Essayer gratuitement
+                            </button>
+                            <button
+                                onClick={() => navigate("/register")}
+                                className="px-8 py-3.5 bg-gradient-to-r from-blue-600 to-blue-800 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-blue-900 transition-all duration-300 shadow-md hover:shadow-lg"
+                            >
+                                S'inscrire maintenant
+                            </button>
+                        </div>
+                        <p className="text-sm text-gray-500 mt-4">
+                            Aucune carte de crédit requise pour l'essai gratuit
+                        </p>
+                    </div>
+                </div>
             </div>
-          ))}
-        </div>
-
-        {/* FAQ Section */}
-        <div className="mt-20 text-center">
-          <div className="bg-white rounded-2xl shadow-lg p-8 max-w-2xl mx-auto border border-gray-200">
-            <h3 className="text-2xl font-bold text-gray-800 mb-4">Questions fréquentes</h3>
-            <div className="space-y-4 text-left">
-              <div className="border-b border-gray-200 pb-4">
-                <h4 className="font-semibold text-gray-800 mb-2">Puis-je changer de formule à tout moment ?</h4>
-                <p className="text-gray-600">Oui, vous pouvez passer du Freemium au Premium à tout moment, et vice versa.</p>
-              </div>
-              <div className="border-b border-gray-200 pb-4">
-                <h4 className="font-semibold text-gray-800 mb-2">Y a-t-il un engagement ?</h4>
-                <p className="text-gray-600">Aucun engagement avec la formule Freemium. Le Premium peut être résilié à tout moment.</p>
-              </div>
-              <div>
-                <h4 className="font-semibold text-gray-800 mb-2">Quels moyens de paiement acceptez-vous ?</h4>
-                <p className="text-gray-600">Nous acceptons les moyens de payement local comme flooz ou mix by yass, et virements bancaires.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        
-      </div>
-      <div className="flex flex-col py-22 sm:flex-row gap-4 justify-center items-center">
-          <button 
-          onClick={() => navigate("/login")}
-          className="bg-gradient-to-r from-blue-600 to-pink-800 text-white font-semibold text-base px-6 py-3 rounded-lg hover:from-blue-700 hover:to-pink-900 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl w-full sm:w-auto">
-            <span className="flex items-center justify-center gap-2">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-               </svg>
-              Essayer maintenant
-            </span>
-          </button>
-
-           
-        </div>
-    </section>
-  );
+        </section>
+    );
 };
 
 export default Offres;

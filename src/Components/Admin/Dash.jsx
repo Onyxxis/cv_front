@@ -50,14 +50,7 @@ const Dash = () => {
   const [totalTemplates, setTotalTemplates] = useState(null);
   const [averageScore, setAverageScore] = useState("0");
 
-
-
-  
-
-
-
   const COLORS = ["#1E3A8A", "#3B82F6", "#60A5FA"];
-
 
   const fetchTotalTemplates = async () => {
     try {
@@ -211,7 +204,7 @@ const Dash = () => {
         <div className="mb-8">
           <div className="relative">
             {/* <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-3xl blur opacity-10"></div> */}
-            <div className="relative bg-white rounded-3xl p-8 shadow-xl border border-blue-100">
+            <div className="relative bg-white rounded-2xl p-6 shadow-lg border border-blue-100">
               <div className="flex items-center justify-between">
                 <div>
                   <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-900 to-indigo-900 bg-clip-text text-transparent">

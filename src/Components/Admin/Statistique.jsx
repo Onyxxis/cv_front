@@ -165,8 +165,8 @@ const Statistique = () => {
     const premiumPercentage = premiumStats ? ((premiumStats.premium / activityStats?.total) * 100).toFixed(1) : 0;
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-6">
-            <div className="mb-8">
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-4">
+            <div className="mb-8 bg-white rounded-2xl p-6 shadow-lg border border-blue-100">
                 <div className="flex items-center gap-4">
                     <div className="w-fit p-3 bg-blue-800 rounded-xl text-white flex items-center justify-center">
                         <FiPieChart size={28} />
