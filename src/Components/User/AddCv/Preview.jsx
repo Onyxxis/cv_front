@@ -189,158 +189,158 @@ export default function PreviewWithTemplates() {
         fetchCVAndTemplates();
     }, [cvId]);
 
-    //Injection des données dans le template
-    // const injectCVData = (html, data) => {
-    //     if (!html || !data) return "";
-    //     let output = html;
-
-    //     const info = data.personal_info || {};
-    //     Object.keys(info).forEach((key) => {
-    //         const regex = new RegExp(`{{\\s*personal_info.${key}\\s*}}`, "g");
-    //         output = output.replace(regex, info[key] || "");
-    //     });
-
-    //     const arrays = ["experiences", "education", "projects", "skills", "languages", "certifications"];
-    //     arrays.forEach((field) => {
-    //         if (!data[field] || data[field].length === 0) {
-    //             output = output.replace(new RegExp(`{{\\s*${field}\\s*}}`, "g"), "");
-    //             return;
-    //         }
-
-    //         let htmlList = "";
-    //         switch (field) {
-    //             case "experiences":
-    //                 htmlList = data.experiences.map(exp => `
-    //                     <div class="item">
-    //                         <strong>${exp.position}</strong> - ${exp.company}
-    //                         <em>(${exp.start_date || ""} - ${exp.end_date || "Présent"})</em>
-    //                         <p>${exp.description || ""}</p>
-    //                     </div>`).join("");
-    //                 break;
-    //             case "education":
-    //                 htmlList = data.education.map(ed => `
-    //                     <div class="item">
-    //                         <strong>${ed.degree_name}</strong> - ${ed.institution}
-    //                         <em>(${ed.start_date || ""} - ${ed.end_date || "Présent"})</em>
-    //                     </div>`).join("");
-    //                 break;
-    //             case "projects":
-    //                 htmlList = data.projects.map(pr => `
-    //                     <div class="item">
-    //                         <strong>${pr.name}</strong>
-    //                         <em>(${pr.start_date || ""} - ${pr.end_date || "Présent"})</em>
-    //                         <p>${pr.description || ""}</p>
-    //                     </div>`).join("");
-    //                 break;
-    //             case "skills":
-    //                 htmlList = data.skills.map(sk => `<div class="skill">${sk.name}</div>`).join("");
-    //                 break;
-    //             case "languages":
-    //                 htmlList = data.languages.map(l => `<div class="lang-item">${l.name} - Niveau : ${l.level}</div>`).join("");
-    //                 break;
-    //             case "certifications":
-    //                 htmlList = data.certifications.map(c => `
-    //                     <div class="certif-item">
-    //                         <strong>${c.title}</strong> - ${c.organization}
-    //                         <em>(${c.date_obtained || ""})</em>
-    //                     </div>`).join("");
-    //                 break;
-    //         }
-
-    //         output = output.replace(new RegExp(`{{\\s*${field}\\s*}}`, "g"), htmlList);
-    //     });
-
-    //     return output;
-    // };
-
+    // Injection des données dans le template
     const injectCVData = (html, data) => {
         if (!html || !data) return "";
         let output = html;
 
-        /* ---------- Infos personnelles ---------- */
         const info = data.personal_info || {};
         Object.keys(info).forEach((key) => {
             const regex = new RegExp(`{{\\s*personal_info.${key}\\s*}}`, "g");
             output = output.replace(regex, info[key] || "");
         });
 
-        /* ---------- Sections dynamiques ---------- */
-        const sections = {
-            experiences: (items) =>
-                items.map(exp => `
-                <div class="timeline-item">
-                    <div class="item-header">
-                        <div>
-                            <div class="item-title">${exp.position}</div>
-                            <div class="item-subtitle">${exp.company}</div>
-                        </div>
-                        <div class="item-date">${exp.start_date || ""} - ${exp.end_date || "Présent"}</div>
-                    </div>
-                    <p class="item-description">${exp.description || ""}</p>
-                </div>
-            `).join(""),
-
-            education: (items) =>
-                items.map(ed => `
-                <div class="timeline-item">
-                    <div class="item-title">${ed.degree_name}</div>
-                    <div class="item-subtitle">${ed.institution}</div>
-                    <div class="item-date">${ed.start_date || ""} - ${ed.end_date || "Présent"}</div>
-                </div>
-            `).join(""),
-
-            projects: (items) =>
-                items.map(pr => `
-                <div class="project-item">
-                    <div class="item-title">${pr.name}</div>
-                    <p class="item-description">${pr.description || ""}</p>
-                </div>
-            `).join(""),
-
-            skills: (items) =>
-                items.map(sk => `<li>${sk.name}</li>`).join(""),
-
-            languages: (items) =>
-                items.map(l => `<li>${l.name} - ${l.level}</li>`).join(""),
-
-            certifications: (items) =>
-                items.map(c => `
-                <div class="certification-item">
-                    <div class="item-title">${c.title}</div>
-                    <div class="item-subtitle">${c.organization}</div>
-                    <div class="item-date">${c.date_obtained || ""}</div>
-                </div>
-            `).join("")
-        };
-
-        Object.entries(sections).forEach(([key, renderer]) => {
-            const items = data[key];
-
-            // const sectionRegex = new RegExp(
-            //     `<!-- START ${key} -->[\\s\\S]*?<!-- END ${key} -->`,
-            //     "g"
-            // );
-            const sectionRegex = new RegExp(
-                `<section[\\s\\S]*?>[\\s\\S]*?{{\\s*${key}\\s*}}[\\s\\S]*?<\\/section>`,
-                "g"
-            );
-
-            if (!items || items.length === 0) {
-                //SUPPRIMER TOUTE LA SECTION
-                output = output.replace(sectionRegex, "");
-            } else {
-                //Injecter le contenu
-                const htmlContent = renderer(items);
-                output = output.replace(
-                    new RegExp(`{{\\s*${key}\\s*}}`, "g"),
-                    htmlContent
-                );
+        const arrays = ["experiences", "education", "projects", "skills", "languages", "certifications"];
+        arrays.forEach((field) => {
+            if (!data[field] || data[field].length === 0) {
+                output = output.replace(new RegExp(`{{\\s*${field}\\s*}}`, "g"), "");
+                return;
             }
+
+            let htmlList = "";
+            switch (field) {
+                case "experiences":
+                    htmlList = data.experiences.map(exp => `
+                        <div class="item">
+                            <strong>${exp.position}</strong> - ${exp.company}
+                            <em>(${exp.start_date || ""} - ${exp.end_date || "Présent"})</em>
+                            <p>${exp.description || ""}</p>
+                        </div>`).join("");
+                    break;
+                case "education":
+                    htmlList = data.education.map(ed => `
+                        <div class="item">
+                            <strong>${ed.degree_name}</strong> - ${ed.institution}
+                            <em>(${ed.start_date || ""} - ${ed.end_date || "Présent"})</em>
+                        </div>`).join("");
+                    break;
+                case "projects":
+                    htmlList = data.projects.map(pr => `
+                        <div class="item">
+                            <strong>${pr.name}</strong>
+                            <em>(${pr.start_date || ""} - ${pr.end_date || "Présent"})</em>
+                            <p>${pr.description || ""}</p>
+                        </div>`).join("");
+                    break;
+                case "skills":
+                    htmlList = data.skills.map(sk => `<div class="skill">${sk.name}</div>`).join("");
+                    break;
+                case "languages":
+                    htmlList = data.languages.map(l => `<div class="lang-item">${l.name} - Niveau : ${l.level}</div>`).join("");
+                    break;
+                case "certifications":
+                    htmlList = data.certifications.map(c => `
+                        <div class="certif-item">
+                            <strong>${c.title}</strong> - ${c.organization}
+                            <em>(${c.date_obtained || ""})</em>
+                        </div>`).join("");
+                    break;
+            }
+
+            output = output.replace(new RegExp(`{{\\s*${field}\\s*}}`, "g"), htmlList);
         });
 
         return output;
     };
-    
+
+    // const injectCVData = (html, data) => {
+    //     if (!html || !data) return "";
+    //     let output = html;
+
+    //     /* ---------- Infos personnelles ---------- */
+    //     const info = data.personal_info || {};
+    //     Object.keys(info).forEach((key) => {
+    //         const regex = new RegExp(`{{\\s*personal_info.${key}\\s*}}`, "g");
+    //         output = output.replace(regex, info[key] || "");
+    //     });
+
+    //     /* ---------- Sections dynamiques ---------- */
+    //     const sections = {
+    //         experiences: (items) =>
+    //             items.map(exp => `
+    //             <div class="timeline-item">
+    //                 <div class="item-header">
+    //                     <div>
+    //                         <div class="item-title">${exp.position}</div>
+    //                         <div class="item-subtitle">${exp.company}</div>
+    //                     </div>
+    //                     <div class="item-date">${exp.start_date || ""} - ${exp.end_date || "Présent"}</div>
+    //                 </div>
+    //                 <p class="item-description">${exp.description || ""}</p>
+    //             </div>
+    //         `).join(""),
+
+    //         education: (items) =>
+    //             items.map(ed => `
+    //             <div class="timeline-item">
+    //                 <div class="item-title">${ed.degree_name}</div>
+    //                 <div class="item-subtitle">${ed.institution}</div>
+    //                 <div class="item-date">${ed.start_date || ""} - ${ed.end_date || "Présent"}</div>
+    //             </div>
+    //         `).join(""),
+
+    //         projects: (items) =>
+    //             items.map(pr => `
+    //             <div class="project-item">
+    //                 <div class="item-title">${pr.name}</div>
+    //                 <p class="item-description">${pr.description || ""}</p>
+    //             </div>
+    //         `).join(""),
+
+    //         skills: (items) =>
+    //             items.map(sk => `<li>${sk.name}</li>`).join(""),
+
+    //         languages: (items) =>
+    //             items.map(l => `<li>${l.name} - ${l.level}</li>`).join(""),
+
+    //         certifications: (items) =>
+    //             items.map(c => `
+    //             <div class="certification-item">
+    //                 <div class="item-title">${c.title}</div>
+    //                 <div class="item-subtitle">${c.organization}</div>
+    //                 <div class="item-date">${c.date_obtained || ""}</div>
+    //             </div>
+    //         `).join("")
+    //     };
+
+    //     Object.entries(sections).forEach(([key, renderer]) => {
+    //         const items = data[key];
+
+    //         // const sectionRegex = new RegExp(
+    //         //     `<!-- START ${key} -->[\\s\\S]*?<!-- END ${key} -->`,
+    //         //     "g"
+    //         // );
+    //         const sectionRegex = new RegExp(
+    //             `<section[\\s\\S]*?>[\\s\\S]*?{{\\s*${key}\\s*}}[\\s\\S]*?<\\/section>`,
+    //             "g"
+    //         );
+
+    //         if (!items || items.length === 0) {
+    //             //SUPPRIMER TOUTE LA SECTION
+    //             output = output.replace(sectionRegex, "");
+    //         } else {
+    //             //Injecter le contenu
+    //             const htmlContent = renderer(items);
+    //             output = output.replace(
+    //                 new RegExp(`{{\\s*${key}\\s*}}`, "g"),
+    //                 htmlContent
+    //             );
+    //         }
+    //     });
+
+    //     return output;
+    // };
+
 
     // Chargement du fichier template
     const loadTemplateFile = async (template) => {
@@ -696,6 +696,16 @@ export default function PreviewWithTemplates() {
                 .animate-slide-up { animation: slide-up 0.2s ease-out; }
                 .animate-fade-in { animation: fade-in 0.15s ease-out; }
             `}</style>
+
+            {processingExport && (
+                <div className="fixed inset-0 bg-white/80 backdrop-blur-sm z-50 flex items-center justify-center">
+                    <div className="text-center">
+                        <Spinner size={40} />
+                        <p className="text-white font-medium mt-3 text-lg">Génération du fichier en cours...</p>
+                    </div>
+                </div>
+            )}
+
         </div>
     );
 }
